@@ -32,7 +32,7 @@ class MewsServicesController extends Controller
             $query->where('name', 'like', '%' . $request->search . '%');
         }
 
-        $services = $query->orderBy('name')->paginate(15);
+        $services = $query->orderBy('name')->paginate(10);
 
         $enterprises = MewsEnterprise::orderBy('name')->get();
         $serviceTypes = MewsService::select('data_discriminator')->distinct()->orderBy('data_discriminator')->pluck('data_discriminator');

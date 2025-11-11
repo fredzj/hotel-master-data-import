@@ -72,7 +72,7 @@ class MewsResourcesController extends Controller
             $query->where('is_active', $request->boolean('active'));
         }
 
-        $resources = $query->orderBy('name')->paginate(50)->withQueryString();
+        $resources = $query->orderBy('name')->paginate(10)->withQueryString();
 
         // Get filter options
         $categories = MewsResourceCategory::with('service')->orderBy('name')->get();

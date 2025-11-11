@@ -20,7 +20,7 @@ class ApaleoUnitsController extends Controller
             ->orderBy('property_id')
             ->orderBy('unit_group_id')
             ->orderBy('name')
-            ->paginate(15);
+            ->paginate(10);
 
         return view('apaleo.units.index', compact('units'));
     }

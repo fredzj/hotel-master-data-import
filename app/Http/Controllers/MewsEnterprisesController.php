@@ -16,7 +16,7 @@ class MewsEnterprisesController extends Controller
     {
         $enterprises = MewsEnterprise::with(['services'])
             ->orderBy('name')
-            ->paginate(15);
+            ->paginate(10);
 
         return view('mews.enterprises.index', compact('enterprises'));
     }

@@ -103,7 +103,7 @@
                     </div>
 
                     <div class="d-flex justify-content-center">
-                        {{ $unitGroups->links() }}
+                        {{ $unitGroups->links('pagination::bootstrap-4', ['class' => 'pagination-sm']) }}
                     </div>
                     @else
                     <div class="alert alert-info" role="alert">

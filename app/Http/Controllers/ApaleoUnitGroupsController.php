@@ -18,7 +18,7 @@ class ApaleoUnitGroupsController extends Controller
         $unitGroups = ApaleoUnitGroup::with(['property', 'units'])
             ->orderBy('property_id')
             ->orderBy('name')
-            ->paginate(15);
+            ->paginate(10);
 
         return view('apaleo.unit-groups.index', compact('unitGroups'));
     }

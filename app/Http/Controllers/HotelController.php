@@ -38,10 +38,10 @@ class HotelController extends Controller
         $query = Hotel::with('pmsSystem');
         
         if ($user->isSuperAdmin()) {
-            $hotels = $query->orderBy($sortBy, $sortDirection)->paginate(15);
+            $hotels = $query->orderBy($sortBy, $sortDirection)->paginate(10);
         } else {
             // Hotel staff can only see their own hotel
-            $hotels = $query->where('id', $user->hotel_id)->orderBy($sortBy, $sortDirection)->paginate(15);
+            $hotels = $query->where('id', $user->hotel_id)->orderBy($sortBy, $sortDirection)->paginate(10);
         }
         
         // Append query parameters to pagination links

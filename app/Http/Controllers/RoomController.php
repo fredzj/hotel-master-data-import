@@ -41,12 +41,12 @@ class RoomController extends Controller
         
         // Get rooms based on user role
         if ($user->isSuperAdmin()) {
-            $rooms = $query->orderBy($sortBy, $sortDirection)->paginate(20);
+            $rooms = $query->orderBy($sortBy, $sortDirection)->paginate(10);
             $hotels = Hotel::all();
         } else {
             $rooms = $query->whereHas('roomType.hotel', function($q) use ($user) {
                 $q->where('id', $user->hotel_id);
-            })->orderBy($sortBy, $sortDirection)->paginate(20);
+            })->orderBy($sortBy, $sortDirection)->paginate(10);
             $hotels = $user->hotel ? [$user->hotel] : [];
         }
         

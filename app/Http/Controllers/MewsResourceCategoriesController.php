@@ -37,7 +37,7 @@ class MewsResourceCategoriesController extends Controller
             $query->where('is_active', $request->is_active === '1');
         }
 
-        $categories = $query->orderBy('name')->paginate(15);
+        $categories = $query->orderBy('name')->paginate(10);
 
         $services = MewsService::with('enterprise')->orderBy('name')->get();
         $categoryTypes = MewsResourceCategory::select('type')->distinct()->orderBy('type')->whereNotNull('type')->pluck('type');

@@ -16,7 +16,7 @@ class ApaleoPropertiesController extends Controller
     {
         $properties = ApaleoProperty::with(['unitGroups', 'units'])
             ->orderBy('name')
-            ->paginate(15);
+            ->paginate(10);
 
         return view('apaleo.properties.index', compact('properties'));
     }

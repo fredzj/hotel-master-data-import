@@ -40,12 +40,12 @@ class RoomTypeController extends Controller
         $query = RoomType::with(['hotel']);
         
         if ($user->isSuperAdmin()) {
-            $roomTypes = $query->orderBy($sortBy, $sortDirection)->paginate(15);
+            $roomTypes = $query->orderBy($sortBy, $sortDirection)->paginate(10);
         } else {
             // Hotel staff can only see room types from their own hotel
             $roomTypes = $query->whereHas('hotel', function($q) use ($user) {
                 $q->where('id', $user->hotel_id);
-            })->orderBy($sortBy, $sortDirection)->paginate(15);
+            })->orderBy($sortBy, $sortDirection)->paginate(10);
         }
         
         // Append query parameters to pagination links

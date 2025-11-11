@@ -41,7 +41,7 @@ class MewsResourceFeaturesController extends Controller
             $query->where('is_active', $request->boolean('active'));
         }
 
-        $features = $query->orderBy('name')->paginate(50)->withQueryString();
+        $features = $query->orderBy('name')->paginate(10)->withQueryString();
 
         // Get filter options
         $enterprises = MewsEnterprise::orderBy('name')->get();

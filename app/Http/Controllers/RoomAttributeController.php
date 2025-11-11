@@ -53,11 +53,11 @@ class RoomAttributeController extends Controller
         
         if ($user->isSuperAdmin()) {
             // Super admin can see all room attributes
-            $roomAttributes = $query->paginate(20);
+            $roomAttributes = $query->paginate(10);
         } else {
             // Hotel staff can only see room attributes from their assigned hotels
             $hotelIds = $user->hotels()->pluck('hotels.id');
-            $roomAttributes = $query->whereIn('hotels.id', $hotelIds)->paginate(20);
+            $roomAttributes = $query->whereIn('hotels.id', $hotelIds)->paginate(10);
         }
         
         // Append query parameters to pagination links
