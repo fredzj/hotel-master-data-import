@@ -138,7 +138,7 @@
                     <!-- PMS-Specific Statistics -->
                     <div class="row mb-4">
                         <div class="col-md-12">
-                            <h5>Extracted Data</h5>
+                            <h5>Extracted PMS Data</h5>
                             <p class="text-muted">Data breakdown by Property Management System</p>
                             
                             <div class="row">
