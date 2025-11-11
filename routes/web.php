@@ -40,6 +40,7 @@ Route::middleware('auth')->group(function () {
     
     // Mews CRUD routes
     Route::resource('mews-enterprises', App\Http\Controllers\MewsEnterpriseController::class);
+    Route::resource('mews-companies', App\Http\Controllers\MewsCompaniesController::class);
     Route::resource('mews-services', App\Http\Controllers\MewsServicesController::class);
     Route::resource('mews-resource-categories', App\Http\Controllers\MewsResourceCategoriesController::class);
     Route::resource('mews-resources', App\Http\Controllers\MewsResourcesController::class);

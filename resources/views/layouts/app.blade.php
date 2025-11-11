@@ -175,6 +175,9 @@
                                 <li><a class="dropdown-item" href="{{ route('mews-enterprises.index') }}">
                                     <i class="fas fa-building"></i> Enterprises
                                 </a></li>
+                                <li><a class="dropdown-item" href="{{ route('mews-companies.index') }}">
+                                    <i class="fas fa-briefcase"></i> Companies
+                                </a></li>
                                 <li><a class="dropdown-item" href="{{ route('mews-services.index') }}">
                                     <i class="fas fa-concierge-bell"></i> Services
                                 </a></li>

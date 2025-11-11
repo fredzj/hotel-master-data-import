@@ -13,6 +13,7 @@ use App\Models\MewsService;
 use App\Models\MewsResource;
 use App\Models\MewsResourceCategory;
 use App\Models\MewsResourceFeature;
+use App\Models\MewsCompany;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
@@ -380,6 +381,51 @@ class MewsAdapter implements PmsAdapterInterface
         );
     }
 
+    private function importCompany(array $data, array $addressMap): MewsCompany
+    {
+        $addressId = $data['AddressId'] ?? null;
+        $address = $addressId && isset($addressMap[$addressId]) ? $addressMap[$addressId] : [];
+
+        return MewsCompany::updateOrCreate(
+            ['mews_id' => $data['Id']],
+            [
+                'enterprise_id' => $data['EnterpriseId'] ?? null,
+                'chain_id' => $data['ChainId'] ?? null,
+                'identifier' => $data['Identifier'] ?? null,
+                'name' => $data['Name'],
+                'mother_company_id' => $data['MotherCompanyId'] ?? null,
+                'telephone' => $data['Telephone'] ?? null,
+                'contact_email' => $data['ContactEmail'] ?? null,
+                'website_url' => $data['WebsiteUrl'] ?? null,
+                'invoicing_email' => $data['InvoicingEmail'] ?? null,
+                'additional_tax_identifier' => $data['AdditionalTaxIdentifier'] ?? null,
+                'iata' => $data['Iata'] ?? null,
+                'department' => $data['Department'] ?? null,
+                'due_interval' => $data['DueInterval'] ?? null,
+                'reference_identifier' => $data['ReferenceIdentifier'] ?? null,
+                'invoice_due_interval' => $data['InvoiceDueInterval'] ?? null,
+                'external_identifier' => $data['ExternalIdentifier'] ?? null,
+                'accounting_code' => $data['AccountingCode'] ?? null,
+                'billing_code' => $data['BillingCode'] ?? null,
+                'notes' => $data['Notes'] ?? null,
+                'tax_identifier' => $data['TaxIdentifier'] ?? null,
+                'address_id' => $addressId,
+                'address_line1' => $address['Line1'] ?? null,
+                'address_line2' => $address['Line2'] ?? null,
+                'city' => $address['City'] ?? null,
+                'postal_code' => $address['PostalCode'] ?? null,
+                'country_code' => $address['CountryCode'] ?? null,
+                'country_subdivision_code' => $address['CountrySubdivisionCode'] ?? null,
+                'latitude' => $address['Latitude'] ?? null,
+                'longitude' => $address['Longitude'] ?? null,
+                'raw_data' => $data,
+                'mews_created_utc' => isset($data['CreatedUtc']) ? \Carbon\Carbon::parse($data['CreatedUtc']) : null,
+                'mews_updated_utc' => isset($data['UpdatedUtc']) ? \Carbon\Carbon::parse($data['UpdatedUtc']) : null,
+                'last_imported_at' => now(),
+            ]
+        );
+    }
+
     private function importResourceCategory(array $data): MewsResourceCategory
     {
         return MewsResourceCategory::updateOrCreate(
@@ -582,6 +628,64 @@ class MewsAdapter implements PmsAdapterInterface
     public function importAllHotels(): int
     {
         return count($this->importHotels());
+    }
+
+    public function importCompanies(): int
+    {
+        if (!$this->authenticate()) {
+            throw new \Exception('Failed to authenticate with Mews API');
+        }
+
+        try {
+            // Use a date range for the query - last 3 months (Mews API limit)
+            $startUtc = now()->subMonths(3)->toIso8601String();
+            $endUtc = now()->toIso8601String();
+            
+            $response = $this->makeRequest('/api/connector/v1/companies/getAll', [
+                'UpdatedUtc' => [
+                    'StartUtc' => $startUtc,
+                    'EndUtc' => $endUtc
+                ],
+                'Extent' => [
+                    'Companies' => true,
+                    'Addresses' => true,
+                    'Inactive' => false
+                ]
+            ]);
+
+            if (!$response->successful()) {
+                throw new \Exception('Failed to fetch companies from Mews API: ' . $response->body());
+            }
+
+            $data = $response->json();
+            $companies = $data['Companies'] ?? [];
+            $addresses = $data['Addresses'] ?? [];
+            
+            // Create address lookup map
+            $addressMap = [];
+            foreach ($addresses as $address) {
+                $addressMap[$address['Id']] = $address;
+            }
+
+            $imported = 0;
+            foreach ($companies as $companyData) {
+                try {
+                    $this->importCompany($companyData, $addressMap);
+                    $imported++;
+                } catch (\Exception $e) {
+                    Log::warning("Failed to import company {$companyData['Id']}: " . $e->getMessage(), [
+                        'company_data' => $companyData
+                    ]);
+                }
+            }
+
+            Log::info("Imported {$imported} companies from Mews");
+            return $imported;
+
+        } catch (\Exception $e) {
+            Log::error('Error importing companies from Mews: ' . $e->getMessage());
+            throw $e;
+        }
     }
 
     /**

@@ -14,6 +14,7 @@ class ImportMewsData extends Command
      */
     protected $signature = 'mews:import 
                            {--enterprises : Import enterprises only}
+                           {--companies : Import companies only}
                            {--services : Import services only}
                            {--categories : Import resource categories only}
                            {--resources : Import resources only}
@@ -52,11 +53,16 @@ class ImportMewsData extends Command
 
         try {
             $importAll = $this->option('all') || (!$this->option('enterprises') 
-                && !$this->option('services') && !$this->option('categories') 
-                && !$this->option('resources') && !$this->option('features'));
+                && !$this->option('companies') && !$this->option('services') 
+                && !$this->option('categories') && !$this->option('resources') 
+                && !$this->option('features'));
 
             if ($this->option('enterprises') || $importAll) {
                 $this->importEnterprises();
+            }
+
+            if ($this->option('companies') || $importAll) {
+                $this->importCompanies();
             }
 
             if ($this->option('services') || $this->option('categories') || $importAll) {
@@ -96,6 +102,34 @@ class ImportMewsData extends Command
             $progressBar->finish();
             $this->newLine();
             $this->error("Failed to import enterprises: {$e->getMessage()}");
+            throw $e;
+        }
+    }
+
+    private function importCompanies(): void
+    {
+        $this->info('Importing companies...');
+        
+        $progressBar = $this->output->createProgressBar();
+        $progressBar->start();
+
+        try {
+            // Check if MewsAdapter has importCompanies method
+            if (!method_exists($this->adapter, 'importCompanies')) {
+                $progressBar->finish();
+                $this->newLine();
+                $this->warn('Companies import method not yet implemented in MewsAdapter');
+                return;
+            }
+            
+            $count = $this->adapter->importCompanies();
+            $progressBar->finish();
+            $this->newLine();
+            $this->info("✓ Imported {$count} companies");
+        } catch (\Exception $e) {
+            $progressBar->finish();
+            $this->newLine();
+            $this->error("Failed to import companies: {$e->getMessage()}");
             throw $e;
         }
     }
