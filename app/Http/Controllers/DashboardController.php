@@ -107,6 +107,21 @@ class DashboardController extends Controller
         return response()->json($importStatus);
     }
 
+    public function transformPmsData(Request $request)
+    {
+        $user = auth()->user();
+        
+        if (!$user->can('import_data')) {
+            abort(403, 'Unauthorized');
+        }
+
+        // TODO: Implement the transformation logic
+        // This is a placeholder method that will need to be implemented
+        // to transform PMS data into the master data structure
+        
+        return redirect()->back()->with('info', 'PMS Data Transformation feature is coming soon.');
+    }
+
     private function getAllStats(): array
     {
         return [

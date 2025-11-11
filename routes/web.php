@@ -19,6 +19,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::post('/dashboard/import/{pms}', [DashboardController::class, 'importPmsData'])->name('dashboard.import');
     Route::get('/dashboard/import-status/{pms}', [DashboardController::class, 'importStatus'])->name('dashboard.import-status');
+    Route::post('/dashboard/transform', [DashboardController::class, 'transformPmsData'])->name('dashboard.transform');
     
     // CRUD operations
     Route::resource('hotels', App\Http\Controllers\HotelController::class);

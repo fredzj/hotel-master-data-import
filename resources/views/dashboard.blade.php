@@ -258,6 +258,36 @@
                         </div>
                     </div>
 
+                    <!-- PMS Data Transformation Section -->
+                    @if(auth()->user()->can('import_data'))
+                    <div class="row mb-4">
+                        <div class="col-md-12">
+                            <h5>PMS Data Transformation</h5>
+                            <p class="text-muted">Transform extracted PMS data into master data structure</p>
+                            
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="card">
+                                        <div class="card-body text-center">
+                                            <form method="POST" action="{{ route('dashboard.transform') }}" style="display: inline;">
+                                                @csrf
+                                                <button type="submit" class="btn btn-primary btn-lg">
+                                                    <i class="fas fa-exchange-alt"></i> Transform from PMS Data
+                                                </button>
+                                            </form>
+                                            <div class="mt-3">
+                                                <small class="text-muted">
+                                                    <i class="fas fa-info-circle"></i> This will transform extracted PMS data into the master data structure (Hotels, Buildings, Floors, Rooms, etc.)
+                                                </small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @endif
+
                     <!-- Statistics Section -->
                     <div class="row mb-4">
                         <div class="col-md-12">
