@@ -14,7 +14,7 @@ class MewsResourceFeaturesController extends Controller
      */
     public function index(Request $request)
     {
-        $query = MewsResourceFeature::with(['enterprise', 'resources']);
+        $query = MewsResourceFeature::with(['service.enterprise', 'resources']);
 
         // Search filter
         if ($request->filled('search')) {
@@ -91,7 +91,7 @@ class MewsResourceFeaturesController extends Controller
      */
     public function show(MewsResourceFeature $mewsResourceFeature)
     {
-        $mewsResourceFeature->load(['enterprise', 'resources']);
+        $mewsResourceFeature->load(['service.enterprise', 'resources']);
 
         return view('mews.resource-features.show', compact('mewsResourceFeature'));
     }
@@ -101,7 +101,7 @@ class MewsResourceFeaturesController extends Controller
      */
     public function edit(MewsResourceFeature $mewsResourceFeature)
     {
-        $mewsResourceFeature->load(['enterprise']);
+        $mewsResourceFeature->load(['service.enterprise']);
         
         $enterprises = MewsEnterprise::orderBy('name')->get();
         

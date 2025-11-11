@@ -52,7 +52,7 @@ class MewsResourceFeature extends Model
 
     public function enterprise()
     {
-        return $this->service->enterprise();
+        return $this->service?->enterprise();
     }
 
     // Scopes

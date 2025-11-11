@@ -113,7 +113,7 @@
                                         </td>
                                         <td>
                                             @if($feature->classification)
-                                                <span class="badge badge-info">{{ $feature->classification }}</span>
+                                                <span class="badge bg-info text-dark">{{ $feature->classification }}</span>
                                             @else
                                                 <span class="text-muted">N/A</span>
                                             @endif
@@ -129,14 +129,14 @@
                                         </td>
                                         <td>
                                             @if($feature->resources && $feature->resources->count() > 0)
-                                                <span class="badge badge-primary">{{ $feature->resources->count() }}</span>
+                                                <span class="badge bg-primary">{{ $feature->resources->count() }}</span>
                                                 <small class="text-muted">resources</small>
                                             @else
                                                 <span class="text-muted">No resources</span>
                                             @endif
                                         </td>
                                         <td>
-                                            <span class="badge {{ $feature->is_active ? 'badge-success' : 'badge-secondary' }}">
+                                            <span class="badge {{ $feature->is_active ? 'bg-success' : 'bg-secondary' }}">
                                                 {{ $feature->is_active ? 'Active' : 'Inactive' }}
                                             </span>
                                         </td>
@@ -181,7 +181,7 @@
                     <!-- Pagination -->
                     @if($features->hasPages())
                         <div class="d-flex justify-content-center">
-                            {{ $features->links() }}
+                            {{ $features->links('pagination::bootstrap-4', ['class' => 'pagination-sm']) }}
                         </div>
                     @endif
                 </div>
