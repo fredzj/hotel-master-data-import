@@ -177,32 +177,9 @@
                         <!-- Pagination -->
                         @if($categories instanceof \Illuminate\Pagination\LengthAwarePaginator)
                             <div class="d-flex justify-content-center">
-                                {{ $categories->appends(request()->query())->links() }}
+                                {{ $categories->appends(request()->query())->links('pagination::bootstrap-4', ['class' => 'pagination-sm']) }}
                             </div>
                         @endif
-
-                        <!-- Summary -->
-                        <div class="mt-3">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="alert alert-info">
-                                        <strong>Summary:</strong> Showing {{ $categories->count() }} of {{ $categories->total() ?? $categories->count() }} resource categories
-                                        @if(request('search'))
-                                            matching "{{ request('search') }}"
-                                        @endif
-                                        @if(request('type') && request('type') !== 'all')
-                                            with type "{{ request('type') }}"
-                                        @endif
-                                        @if(request('service_id'))
-                                            from selected service
-                                        @endif
-                                        @if(request('is_active') && request('is_active') !== 'all')
-                                            with {{ request('is_active') === '1' ? 'active' : 'inactive' }} status
-                                        @endif
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     @else
                         <div class="text-center py-5">
                             <i class="fas fa-layer-group fa-3x text-muted mb-3"></i>

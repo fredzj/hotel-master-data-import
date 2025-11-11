@@ -7,12 +7,12 @@
             <div class="card">
                 <div class="card-header">
                     <div class="d-flex justify-content-between align-items-center">
-                        <h4 class="mb-0">{{ $category->name }}</h4>
+                        <h4 class="mb-0">Resource Category Details: {{ $category->name }}</h4>
                         <div>
-                            <a href="{{ route('mews-resource-categories.edit', $category) }}" class="btn btn-primary btn-sm">
+                            <a href="{{ route('mews-resource-categories.edit', $category) }}" class="btn btn-warning">
                                 <i class="fas fa-edit"></i> Edit
                             </a>
-                            <a href="{{ route('mews-resource-categories.index') }}" class="btn btn-secondary btn-sm">
+                            <a href="{{ route('mews-resource-categories.index') }}" class="btn btn-secondary">
                                 <i class="fas fa-arrow-left"></i> Back to List
                             </a>
                         </div>
@@ -22,7 +22,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-6">
-                            <h5 class="text-primary">Basic Information</h5>
+                            <h5>Basic Information</h5>
                             <table class="table table-borderless">
                                 <tr>
                                     <td><strong>Mews ID:</strong></td>
@@ -73,7 +73,7 @@
                         </div>
 
                         <div class="col-md-6">
-                            <h5 class="text-primary">Capacity & Configuration</h5>
+                            <h5>Capacity & Configuration</h5>
                             <table class="table table-borderless">
                                 <tr>
                                     <td><strong>Capacity:</strong></td>
@@ -112,8 +112,8 @@
                     @if($category->description)
                     <div class="row mt-4">
                         <div class="col-12">
-                            <h5 class="text-primary">Description</h5>
-                            <div class="card bg-light">
+                            <h5>Description</h5>
+                            <div class="card">
                                 <div class="card-body">
                                     <p class="mb-0">{{ $category->description }}</p>
                                 </div>
@@ -125,7 +125,7 @@
                     @if($category->resources && $category->resources->count() > 0)
                     <div class="row mt-4">
                         <div class="col-12">
-                            <h5 class="text-primary">Associated Resources ({{ $category->resources->count() }})</h5>
+                            <h5>Associated Resources ({{ $category->resources->count() }})</h5>
                             <div class="table-responsive">
                                 <table class="table table-striped">
                                     <thead>
@@ -172,7 +172,7 @@
 
                     <div class="row mt-4">
                         <div class="col-12">
-                            <h5 class="text-primary">System Information</h5>
+                            <h5>System Information</h5>
                             <table class="table table-borderless">
                                 <tr>
                                     <td><strong>Created in Mews:</strong></td>
@@ -191,11 +191,16 @@
                     </div>
 
                     @if($category->raw_data)
-                    <div class="row mt-4">
-                        <div class="col-12">
-                            <h5 class="text-primary">Raw Data</h5>
-                            <div class="card bg-light">
-                                <div class="card-body">
+                    <hr>
+                    <div class="accordion" id="rawDataAccordion">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="rawDataHeading">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#rawDataCollapse">
+                                    <i class="fas fa-code me-2"></i> Raw API Data
+                                </button>
+                            </h2>
+                            <div id="rawDataCollapse" class="accordion-collapse collapse" data-bs-parent="#rawDataAccordion">
+                                <div class="accordion-body">
                                     <pre><code>{{ json_encode($category->raw_data, JSON_PRETTY_PRINT) }}</code></pre>
                                 </div>
                             </div>

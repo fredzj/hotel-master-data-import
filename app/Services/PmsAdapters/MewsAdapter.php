@@ -428,13 +428,26 @@ class MewsAdapter implements PmsAdapterInterface
 
     private function importResourceCategory(array $data): MewsResourceCategory
     {
+        // Extract name from Names array (multi-language support)
+        $name = null;
+        if (isset($data['Names']) && is_array($data['Names'])) {
+            // Try to get English name first, otherwise use the first available
+            $name = $data['Names']['en-US'] ?? $data['Names']['en-GB'] ?? reset($data['Names']);
+        }
+        
+        // Extract description from Descriptions array (multi-language support)
+        $description = null;
+        if (isset($data['Descriptions']) && is_array($data['Descriptions'])) {
+            $description = $data['Descriptions']['en-US'] ?? $data['Descriptions']['en-GB'] ?? reset($data['Descriptions']);
+        }
+        
         return MewsResourceCategory::updateOrCreate(
             ['mews_id' => $data['Id']],
             [
                 'service_id' => $data['ServiceId'],
                 'external_identifier' => $data['ExternalIdentifier'] ?? null,
-                'name' => $data['Name'],
-                'description' => $data['Description'] ?? null,
+                'name' => $name,
+                'description' => $description,
                 'is_active' => $data['IsActive'] ?? true,
                 'type' => $data['Type'] ?? null,
                 'normal_bed_count' => $data['NormalBedCount'] ?? null,
