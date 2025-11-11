@@ -135,6 +135,129 @@
                     </div>
                     @endif
 
+                    <!-- PMS-Specific Statistics -->
+                    <div class="row mb-4">
+                        <div class="col-md-12">
+                            <h5>PMS-Specific Data</h5>
+                            <p class="text-muted">Data breakdown by Property Management System</p>
+                            
+                            <div class="row">
+                                <!-- Apaleo Statistics -->
+                                @if(isset($stats['apaleo']) && ($stats['apaleo']['properties'] > 0 || $stats['apaleo']['unit_types'] > 0 || $stats['apaleo']['units'] > 0 || $stats['apaleo']['unit_attributes'] > 0))
+                                <div class="col-md-6 mb-3">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h6 class="mb-0">
+                                                <i class="fas fa-hotel"></i> Apaleo Data
+                                            </h6>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <div class="text-center">
+                                                        <h5 class="text-primary">{{ $stats['apaleo']['properties'] }}</h5>
+                                                        <small class="text-muted">Properties</small>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="text-center">
+                                                        <h5 class="text-info">{{ $stats['apaleo']['unit_types'] }}</h5>
+                                                        <small class="text-muted">Unit Groups</small>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6 mt-2">
+                                                    <div class="text-center">
+                                                        <h5 class="text-success">{{ $stats['apaleo']['units'] }}</h5>
+                                                        <small class="text-muted">Units</small>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6 mt-2">
+                                                    <div class="text-center">
+                                                        <h5 class="text-warning">{{ $stats['apaleo']['unit_attributes'] }}</h5>
+                                                        <small class="text-muted">Attributes</small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                @endif
+
+                                <!-- Mews Statistics -->
+                                @if(isset($stats['mews']) && ($stats['mews']['enterprises'] > 0 || $stats['mews']['services'] > 0 || $stats['mews']['resource_categories'] > 0 || $stats['mews']['resources'] > 0 || $stats['mews']['resource_features'] > 0))
+                                <div class="col-md-6 mb-3">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h6 class="mb-0">
+                                                <i class="fas fa-building"></i> Mews Data
+                                            </h6>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <div class="text-center">
+                                                        <h5 class="text-primary">{{ $stats['mews']['enterprises'] }}</h5>
+                                                        <small class="text-muted">Enterprises</small>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="text-center">
+                                                        <h5 class="text-info">{{ $stats['mews']['services'] }}</h5>
+                                                        <small class="text-muted">Services</small>
+                                                    </div>
+                                                </div>
+                                                <div class="col-4 mt-2">
+                                                    <div class="text-center">
+                                                        <h5 class="text-success">{{ $stats['mews']['resource_categories'] }}</h5>
+                                                        <small class="text-muted">Categories</small>
+                                                    </div>
+                                                </div>
+                                                <div class="col-4 mt-2">
+                                                    <div class="text-center">
+                                                        <h5 class="text-warning">{{ $stats['mews']['resources'] }}</h5>
+                                                        <small class="text-muted">Resources</small>
+                                                    </div>
+                                                </div>
+                                                <div class="col-4 mt-2">
+                                                    <div class="text-center">
+                                                        <h5 class="text-secondary">{{ $stats['mews']['resource_features'] }}</h5>
+                                                        <small class="text-muted">Features</small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                @endif
+                            </div>
+
+                            <!-- Quick Access Links -->
+                            @if(auth()->user()->can('view_data'))
+                            <div class="row mt-3">
+                                <div class="col-12">
+                                    <h6>Quick Access</h6>
+                                    <div class="d-flex flex-wrap gap-2">
+                                        @if(isset($stats['mews']) && $stats['mews']['enterprises'] > 0)
+                                            <a href="{{ route('mews-enterprises.index') }}" class="btn btn-outline-success btn-sm">
+                                                <i class="fas fa-building"></i> Mews Enterprises ({{ $stats['mews']['enterprises'] }})
+                                            </a>
+                                            <a href="{{ route('mews-resource-categories.index') }}" class="btn btn-outline-success btn-sm">
+                                                <i class="fas fa-tags"></i> Resource Categories ({{ $stats['mews']['resource_categories'] }})
+                                            </a>
+                                            <a href="{{ route('mews-resources.index') }}" class="btn btn-outline-success btn-sm">
+                                                <i class="fas fa-door-open"></i> Resources ({{ $stats['mews']['resources'] }})
+                                            </a>
+                                            <a href="{{ route('mews-resource-features.index') }}" class="btn btn-outline-success btn-sm">
+                                                <i class="fas fa-star"></i> Features ({{ $stats['mews']['resource_features'] }})
+                                            </a>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                            @endif
+                        </div>
+                    </div>
+
                     <!-- Statistics Section -->
                     <div class="row mb-4">
                         <div class="col-md-12">
@@ -278,129 +401,6 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-
-                    <!-- PMS-Specific Statistics -->
-                    <div class="row mb-4">
-                        <div class="col-md-12">
-                            <h5>PMS-Specific Data</h5>
-                            <p class="text-muted">Data breakdown by Property Management System</p>
-                            
-                            <div class="row">
-                                <!-- Apaleo Statistics -->
-                                @if(isset($stats['apaleo']) && ($stats['apaleo']['properties'] > 0 || $stats['apaleo']['unit_types'] > 0 || $stats['apaleo']['units'] > 0 || $stats['apaleo']['unit_attributes'] > 0))
-                                <div class="col-md-6 mb-3">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h6 class="mb-0">
-                                                <i class="fas fa-hotel"></i> Apaleo Data
-                                            </h6>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="row">
-                                                <div class="col-6">
-                                                    <div class="text-center">
-                                                        <h5 class="text-primary">{{ $stats['apaleo']['properties'] }}</h5>
-                                                        <small class="text-muted">Properties</small>
-                                                    </div>
-                                                </div>
-                                                <div class="col-6">
-                                                    <div class="text-center">
-                                                        <h5 class="text-info">{{ $stats['apaleo']['unit_types'] }}</h5>
-                                                        <small class="text-muted">Unit Groups</small>
-                                                    </div>
-                                                </div>
-                                                <div class="col-6 mt-2">
-                                                    <div class="text-center">
-                                                        <h5 class="text-success">{{ $stats['apaleo']['units'] }}</h5>
-                                                        <small class="text-muted">Units</small>
-                                                    </div>
-                                                </div>
-                                                <div class="col-6 mt-2">
-                                                    <div class="text-center">
-                                                        <h5 class="text-warning">{{ $stats['apaleo']['unit_attributes'] }}</h5>
-                                                        <small class="text-muted">Attributes</small>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                @endif
-
-                                <!-- Mews Statistics -->
-                                @if(isset($stats['mews']) && ($stats['mews']['enterprises'] > 0 || $stats['mews']['services'] > 0 || $stats['mews']['resource_categories'] > 0 || $stats['mews']['resources'] > 0 || $stats['mews']['resource_features'] > 0))
-                                <div class="col-md-6 mb-3">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h6 class="mb-0">
-                                                <i class="fas fa-building"></i> Mews Data
-                                            </h6>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="row">
-                                                <div class="col-6">
-                                                    <div class="text-center">
-                                                        <h5 class="text-primary">{{ $stats['mews']['enterprises'] }}</h5>
-                                                        <small class="text-muted">Enterprises</small>
-                                                    </div>
-                                                </div>
-                                                <div class="col-6">
-                                                    <div class="text-center">
-                                                        <h5 class="text-info">{{ $stats['mews']['services'] }}</h5>
-                                                        <small class="text-muted">Services</small>
-                                                    </div>
-                                                </div>
-                                                <div class="col-4 mt-2">
-                                                    <div class="text-center">
-                                                        <h5 class="text-success">{{ $stats['mews']['resource_categories'] }}</h5>
-                                                        <small class="text-muted">Categories</small>
-                                                    </div>
-                                                </div>
-                                                <div class="col-4 mt-2">
-                                                    <div class="text-center">
-                                                        <h5 class="text-warning">{{ $stats['mews']['resources'] }}</h5>
-                                                        <small class="text-muted">Resources</small>
-                                                    </div>
-                                                </div>
-                                                <div class="col-4 mt-2">
-                                                    <div class="text-center">
-                                                        <h5 class="text-secondary">{{ $stats['mews']['resource_features'] }}</h5>
-                                                        <small class="text-muted">Features</small>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                @endif
-                            </div>
-
-                            <!-- Quick Access Links -->
-                            @if(auth()->user()->can('view_data'))
-                            <div class="row mt-3">
-                                <div class="col-12">
-                                    <h6>Quick Access</h6>
-                                    <div class="d-flex flex-wrap gap-2">
-                                        @if(isset($stats['mews']) && $stats['mews']['enterprises'] > 0)
-                                            <a href="{{ route('mews-enterprises.index') }}" class="btn btn-outline-success btn-sm">
-                                                <i class="fas fa-building"></i> Mews Enterprises ({{ $stats['mews']['enterprises'] }})
-                                            </a>
-                                            <a href="{{ route('mews-resource-categories.index') }}" class="btn btn-outline-success btn-sm">
-                                                <i class="fas fa-tags"></i> Resource Categories ({{ $stats['mews']['resource_categories'] }})
-                                            </a>
-                                            <a href="{{ route('mews-resources.index') }}" class="btn btn-outline-success btn-sm">
-                                                <i class="fas fa-door-open"></i> Resources ({{ $stats['mews']['resources'] }})
-                                            </a>
-                                            <a href="{{ route('mews-resource-features.index') }}" class="btn btn-outline-success btn-sm">
-                                                <i class="fas fa-star"></i> Features ({{ $stats['mews']['resource_features'] }})
-                                            </a>
-                                        @endif
-                                    </div>
-                                </div>
-                            </div>
-                            @endif
                         </div>
                     </div>
 
