@@ -88,7 +88,7 @@
                     @if(auth()->user()->can('import_data'))
                     <div class="row mb-4">
                         <div class="col-md-12">
-                            <h5>PMS Data Extraction</h5>
+                            <h5>1. Extract PMS Data</h5>
                             <p class="text-muted">Extract data from Property Management Systems</p>
                             
                             <div class="row">
@@ -138,7 +138,7 @@
                     <!-- PMS-Specific Statistics -->
                     <div class="row mb-4">
                         <div class="col-md-12">
-                            <h5>Extracted PMS Data</h5>
+                            <h5>2. Check extracted Data</h5>
                             <p class="text-muted">Data breakdown by Property Management System</p>
                             
                             <div class="row">
@@ -262,7 +262,7 @@
                     @if(auth()->user()->can('import_data'))
                     <div class="row mb-4">
                         <div class="col-md-12">
-                            <h5>PMS Data Transformation</h5>
+                            <h5>3. Transform PMS Data </h5
                             <p class="text-muted">Transform extracted PMS data into master data structure</p>
                             
                             <div class="row">
@@ -291,7 +291,7 @@
                     <!-- Statistics Section -->
                     <div class="row mb-4">
                         <div class="col-md-12">
-                            <h5>Data Statistics</h5>
+                            <h5>4. Check transformed Data</h5>
                             <p class="text-muted">
                                 @if(auth()->user()->isSuperAdmin())
                                     System-wide statistics
