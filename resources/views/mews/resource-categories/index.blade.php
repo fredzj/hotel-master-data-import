@@ -97,7 +97,7 @@
                                         </td>
                                         <td>
                                             @if($category->type)
-                                                <span class="badge badge-info">{{ $category->type }}</span>
+                                                <span class="badge bg-info text-dark">{{ $category->type }}</span>
                                             @else
                                                 <span class="text-muted">N/A</span>
                                             @endif
@@ -116,7 +116,7 @@
                                         </td>
                                         <td>
                                             @if($category->capacity)
-                                                <span class="badge badge-primary">{{ $category->capacity }}</span>
+                                                <span class="badge bg-primary">{{ $category->capacity }}</span>
                                             @else
                                                 <span class="text-muted">N/A</span>
                                             @endif
@@ -135,7 +135,7 @@
                                             @endif
                                         </td>
                                         <td>
-                                            <span class="badge {{ $category->is_active ? 'badge-success' : 'badge-secondary' }}">
+                                            <span class="badge {{ $category->is_active ? 'bg-success' : 'bg-secondary' }}">
                                                 {{ $category->is_active ? 'Active' : 'Inactive' }}
                                             </span>
                                         </td>
