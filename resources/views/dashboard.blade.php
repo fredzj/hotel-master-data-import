@@ -100,10 +100,23 @@
                                                 <h6 class="card-title">{{ $adapter['name'] }}</h6>
                                                 <form method="POST" action="{{ route('dashboard.import', $slug) }}" style="display: inline;">
                                                     @csrf
-                                                    <button type="submit" class="btn btn-primary import-btn" data-pms="{{ $slug }}">
+                                                    <button type="submit" 
+                                                            class="btn btn-primary import-btn" 
+                                                            data-pms="{{ $slug }}"
+                                                            @if(($slug === 'apaleo' && $apaleoHasData) || ($slug === 'mews' && $mewsHasData)) disabled @endif>
                                                         Import from {{ $adapter['name'] }}
                                                     </button>
                                                 </form>
+                                                @if($slug === 'apaleo' && $apaleoHasData)
+                                                    <small class="text-muted d-block mt-2">
+                                                        <i class="fas fa-info-circle"></i> Data already imported
+                                                    </small>
+                                                @endif
+                                                @if($slug === 'mews' && $mewsHasData)
+                                                    <small class="text-muted d-block mt-2">
+                                                        <i class="fas fa-info-circle"></i> Data already imported
+                                                    </small>
+                                                @endif
                                                 <div class="mt-2">
                                                     <div class="progress" style="display: none;" id="progress-{{ $slug }}">
                                                         <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 0%"></div>

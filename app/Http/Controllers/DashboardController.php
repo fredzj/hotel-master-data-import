@@ -46,7 +46,20 @@ class DashboardController extends Controller
             $hotels = $user->hotel ? [$user->hotel] : [];
         }
 
-        return view('dashboard', compact('availablePmsAdapters', 'stats', 'hotels'));
+        // Check if Apaleo tables have any data
+        $apaleoHasData = ApaleoProperty::count() > 0 
+            || ApaleoUnitGroup::count() > 0 
+            || ApaleoUnit::count() > 0 
+            || ApaleoUnitAttribute::count() > 0;
+
+        // Check if Mews tables have any data
+        $mewsHasData = MewsEnterprise::count() > 0 
+            || MewsService::count() > 0 
+            || MewsResourceCategory::count() > 0 
+            || MewsResource::count() > 0 
+            || MewsResourceFeature::count() > 0;
+
+        return view('dashboard', compact('availablePmsAdapters', 'stats', 'hotels', 'apaleoHasData', 'mewsHasData'));
     }
 
     public function importPmsData(Request $request, string $pmsSlug)
