@@ -88,8 +88,8 @@
                     @if(auth()->user()->can('import_data'))
                     <div class="row mb-4">
                         <div class="col-md-12">
-                            <h5>PMS Data Import</h5>
-                            <p class="text-muted">Import data from Property Management Systems</p>
+                            <h5>PMS Data Extraction</h5>
+                            <p class="text-muted">Extract data from Property Management Systems</p>
                             
                             <div class="row">
                                 @foreach($availablePmsAdapters as $slug => $adapter)
@@ -104,17 +104,17 @@
                                                             class="btn btn-primary import-btn" 
                                                             data-pms="{{ $slug }}"
                                                             @if(($slug === 'apaleo' && $apaleoHasData) || ($slug === 'mews' && $mewsHasData)) disabled @endif>
-                                                        Import from {{ $adapter['name'] }}
+                                                        Extract from {{ $adapter['name'] }}
                                                     </button>
                                                 </form>
                                                 @if($slug === 'apaleo' && $apaleoHasData)
                                                     <small class="text-muted d-block mt-2">
-                                                        <i class="fas fa-info-circle"></i> Data already imported
+                                                        <i class="fas fa-info-circle"></i> Data already extracted
                                                     </small>
                                                 @endif
                                                 @if($slug === 'mews' && $mewsHasData)
                                                     <small class="text-muted d-block mt-2">
-                                                        <i class="fas fa-info-circle"></i> Data already imported
+                                                        <i class="fas fa-info-circle"></i> Data already extracted
                                                     </small>
                                                 @endif
                                                 <div class="mt-2">
@@ -436,7 +436,7 @@ function showToast(message, type = 'success', duration = 5000) {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Monitor import progress
+    // Monitor extraction progress
     const importBtns = document.querySelectorAll('.import-btn');
     
     importBtns.forEach(btn => {
@@ -445,17 +445,17 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Disable button and show progress
             this.disabled = true;
-            this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Import Starting...';
+            this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Extraction Starting...';
             this.className = 'btn btn-warning import-btn';
             
             const progressBar = document.getElementById('progress-' + pmsSlug);
             const statusText = document.getElementById('status-' + pmsSlug);
             
             progressBar.style.display = 'block';
-            statusText.innerHTML = '<span class="text-info"><i class="fas fa-play"></i> Initializing import...</span>';
+            statusText.innerHTML = '<span class="text-info"><i class="fas fa-play"></i> Initializing extraction...</span>';
             
             // Show start toast
-            showToast(`<i class="fas fa-play"></i> <strong>Import Started</strong><br><small>Importing data from ${pmsSlug.charAt(0).toUpperCase() + pmsSlug.slice(1)}...</small>`, 'info', 4000);
+            showToast(`<i class="fas fa-play"></i> <strong>Extraction Started</strong><br><small>Extracting data from ${pmsSlug.charAt(0).toUpperCase() + pmsSlug.slice(1)}...</small>`, 'info', 4000);
             
             // Start monitoring progress
             const interval = setInterval(() => {
@@ -476,14 +476,14 @@ document.addEventListener('DOMContentLoaded', function() {
                             
                             // Show success state
                             this.disabled = false;
-                            this.innerHTML = '<i class="fas fa-check-circle"></i> Import Completed';
+                            this.innerHTML = '<i class="fas fa-check-circle"></i> Extraction Completed';
                             this.className = 'btn btn-success import-btn';
                             
                             // Show detailed results if available
-                            let resultText = 'Import completed successfully!';
+                            let resultText = 'Extraction completed successfully!';
                             if (data.results) {
                                 const results = data.results;
-                                resultText = `✅ Import completed! Hotels: ${results.hotels || 0}, Room Types: ${results.room_types || 0}, Rooms: ${results.rooms || 0}, Room Attributes: ${results.room_attributes || 0}`;
+                                resultText = `✅ Extraction completed! Hotels: ${results.hotels || 0}, Room Types: ${results.room_types || 0}, Rooms: ${results.rooms || 0}, Room Attributes: ${results.room_attributes || 0}`;
                             }
                             statusText.innerHTML = `<span class="text-success"><strong>${resultText}</strong></span>`;
                             
@@ -497,7 +497,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             card.classList.add('import-success');
                             
                             // Show toast notification
-                            let toastMessage = '<i class="fas fa-check-circle"></i> <strong>Import Completed Successfully!</strong>';
+                            let toastMessage = '<i class="fas fa-check-circle"></i> <strong>Extraction Completed Successfully!</strong>';
                             if (data.results) {
                                 const results = data.results;
                                 toastMessage += `<br><small>Hotels: ${results.hotels || 0} | Room Types: ${results.room_types || 0} | Rooms: ${results.rooms || 0} | Attributes: ${results.room_attributes || 0}</small>`;
@@ -519,10 +519,10 @@ document.addEventListener('DOMContentLoaded', function() {
                             
                             // Show error state
                             this.disabled = false;
-                            this.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Import Failed';
+                            this.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Extraction Failed';
                             this.className = 'btn btn-danger import-btn';
                             
-                            statusText.innerHTML = `<span class="text-danger"><strong>❌ Import failed:</strong> ${data.error || 'Unknown error'}</span>`;
+                            statusText.innerHTML = `<span class="text-danger"><strong>❌ Extraction failed:</strong> ${data.error || 'Unknown error'}</span>`;
                             progressBar.style.display = 'none';
                             
                             // Add error styling to card
@@ -532,11 +532,11 @@ document.addEventListener('DOMContentLoaded', function() {
                             card.classList.add('import-error');
                             
                             // Show error toast
-                            showToast(`<i class="fas fa-exclamation-triangle"></i> <strong>Import Failed!</strong><br><small>${data.error || 'Unknown error occurred'}</small>`, 'danger', 10000);
+                            showToast(`<i class="fas fa-exclamation-triangle"></i> <strong>Extraction Failed!</strong><br><small>${data.error || 'Unknown error occurred'}</small>`, 'danger', 10000);
                             
                             // Reset button after 5 seconds
                             setTimeout(() => {
-                                this.innerHTML = 'Import from ' + pmsSlug.charAt(0).toUpperCase() + pmsSlug.slice(1);
+                                this.innerHTML = 'Extract from ' + pmsSlug.charAt(0).toUpperCase() + pmsSlug.slice(1);
                                 this.className = 'btn btn-primary import-btn';
                                 statusText.textContent = '';
                                 card.style.border = '';
