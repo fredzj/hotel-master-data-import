@@ -271,13 +271,18 @@
                                         <div class="card-body text-center">
                                             <form method="POST" action="{{ route('dashboard.transform') }}" style="display: inline;">
                                                 @csrf
-                                                <button type="submit" class="btn btn-primary btn-lg">
+                                                <button type="submit" class="btn btn-primary btn-lg" {{ $transformedHasData ? 'disabled' : '' }}>
                                                     <i class="fas fa-exchange-alt"></i> Transform PMS Data
                                                 </button>
                                             </form>
                                             <div class="mt-3">
                                                 <small class="text-muted">
-                                                    <i class="fas fa-info-circle"></i> This will transform extracted PMS data into the master data structure (Hotels, Buildings, Floors, Rooms, etc.)
+                                                    <i class="fas fa-info-circle"></i> 
+                                                    @if($transformedHasData)
+                                                        Data already transformed
+                                                    @else
+                                                        This will transform extracted PMS data into the master data structure (Hotels, Buildings, Floors, Rooms, etc.)
+                                                    @endif
                                                 </small>
                                             </div>
                                         </div>

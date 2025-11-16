@@ -60,7 +60,17 @@ class DashboardController extends Controller
             || MewsResource::count() > 0 
             || MewsResourceFeature::count() > 0;
 
-        return view('dashboard', compact('availablePmsAdapters', 'stats', 'hotels', 'apaleoHasData', 'mewsHasData'));
+        // Check if transformed data tables have any data
+        $transformedHasData = Hotel::count() > 0 
+            || Building::count() > 0 
+            || Floor::count() > 0 
+            || RoomType::count() > 0 
+            || Room::count() > 0 
+            || SunbedArea::count() > 0 
+            || \App\Models\SunbedType::count() > 0 
+            || Sunbed::count() > 0;
+
+        return view('dashboard', compact('availablePmsAdapters', 'stats', 'hotels', 'apaleoHasData', 'mewsHasData', 'transformedHasData'));
     }
 
     public function importPmsData(Request $request, string $pmsSlug)
