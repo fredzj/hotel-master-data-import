@@ -22,42 +22,6 @@
                         </div>
                     @endif
 
-                    <!-- Statistics -->
-                    <div class="row mb-4">
-                        <div class="col-md-3">
-                            <div class="card bg-primary text-white">
-                                <div class="card-body text-center">
-                                    <h5>Total Rooms</h5>
-                                    <h2>{{ $rooms->total() }}</h2>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="card bg-success text-white">
-                                <div class="card-body text-center">
-                                    <h5>Available Rooms</h5>
-                                    <h2>{{ $rooms->where('status', 'available')->count() }}</h2>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="card bg-warning text-white">
-                                <div class="card-body text-center">
-                                    <h5>Out of Order</h5>
-                                    <h2>{{ $rooms->where('status', 'out_of_order')->count() }}</h2>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="card bg-info text-white">
-                                <div class="card-body text-center">
-                                    <h5>Maintenance</h5>
-                                    <h2>{{ $rooms->where('status', 'maintenance')->count() }}</h2>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
                     <!-- Rooms Table -->
                     <div class="table-responsive">
                         <table class="table table-striped">

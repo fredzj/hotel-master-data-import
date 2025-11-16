@@ -92,9 +92,7 @@
                                         <br><small class="text-muted">{{ $roomType->hotel->code }}</small>
                                     </td>
                                     <td>
-                                        <span class="badge bg-{{ $roomType->type === 'BedRoom' ? 'primary' : 'info' }}">
-                                            {{ $roomType->type ?? 'N/A' }}
-                                        </span>
+                                        {{ $roomType->type ?? 'N/A' }}
                                     </td>
                                     <td class="text-center">
                                         <strong>{{ $roomType->max_occupancy ?? 'N/A' }}</strong>

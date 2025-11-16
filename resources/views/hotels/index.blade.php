@@ -108,7 +108,7 @@
                                         @endif
                                     </td>
                                     <td>
-                                        <span class="badge bg-info">{{ $hotel->pmsSystem->name ?? 'N/A' }}</span>
+                                        {{ $hotel->pmsSystem->name ?? 'N/A' }}
                                     </td>
                                     <td>
                                         <span class="badge bg-{{ $hotel->status === 'Active' ? 'success' : ($hotel->status === 'Test' ? 'warning' : 'secondary') }}">
