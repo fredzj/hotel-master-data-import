@@ -308,6 +308,16 @@ class DashboardController extends Controller
     private function getAllStats(): array
     {
         return [
+            // Transformed master data statistics
+            'hotels' => Hotel::count(),
+            'buildings' => Building::count(),
+            'floors' => Floor::count(),
+            'room_types' => RoomType::count(),
+            'rooms' => Room::count(),
+            'sunbed_areas' => SunbedArea::count(),
+            'sunbed_types' => \App\Models\SunbedType::count(),
+            'sunbeds' => Sunbed::count(),
+            
             // Combined statistics from all PMS systems
             'properties' => ApaleoProperty::count() + MewsEnterprise::count(),
             'unit_types' => ApaleoUnitGroup::count() + MewsResourceCategory::count(),

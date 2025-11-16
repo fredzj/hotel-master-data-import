@@ -272,7 +272,7 @@
                                             <form method="POST" action="{{ route('dashboard.transform') }}" style="display: inline;">
                                                 @csrf
                                                 <button type="submit" class="btn btn-primary btn-lg">
-                                                    <i class="fas fa-exchange-alt"></i> Transform from PMS Data
+                                                    <i class="fas fa-exchange-alt"></i> Transform PMS Data
                                                 </button>
                                             </form>
                                             <div class="mt-3">
