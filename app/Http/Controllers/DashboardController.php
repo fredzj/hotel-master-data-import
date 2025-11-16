@@ -6,6 +6,7 @@ use App\Jobs\ImportPmsDataJob;
 use App\Models\Building;
 use App\Models\Floor;
 use App\Models\Hotel;
+use App\Models\PmsSystem;
 use App\Models\Room;
 use App\Models\RoomAttribute;
 use App\Models\RoomType;
@@ -115,11 +116,193 @@ class DashboardController extends Controller
             abort(403, 'Unauthorized');
         }
 
-        // TODO: Implement the transformation logic
-        // This is a placeholder method that will need to be implemented
-        // to transform PMS data into the master data structure
-        
-        return redirect()->back()->with('info', 'PMS Data Transformation feature is coming soon.');
+        try {
+            \DB::beginTransaction();
+            
+            $transformedCount = [
+                'hotels' => 0,
+                'room_types' => 0,
+                'rooms' => 0,
+            ];
+
+            // Get or create PMS systems
+            $apaleoPms = PmsSystem::firstOrCreate(
+                ['slug' => 'apaleo'],
+                ['name' => 'Apaleo']
+            );
+            
+            $mewsPms = PmsSystem::firstOrCreate(
+                ['slug' => 'mews'],
+                ['name' => 'Mews']
+            );
+
+            // 1. Transform Apaleo Properties to Hotels
+            $apaleoProperties = ApaleoProperty::with(['unitGroups.units'])->get();
+            foreach ($apaleoProperties as $property) {
+                $hotel = Hotel::updateOrCreate(
+                    [
+                        'pms_system_id' => $apaleoPms->id,
+                        'external_id' => $property->apaleo_id,
+                    ],
+                    [
+                        'code' => $property->code,
+                        'name' => $property->name,
+                        'description' => $property->description,
+                        'company_name' => $property->company_name,
+                        'commercial_register_entry' => $property->commercial_register_entry,
+                        'tax_id' => $property->tax_id,
+                        'address' => $property->address_line1,
+                        'city' => $property->city,
+                        'country' => $property->country_code,
+                        'postal_code' => $property->postal_code,
+                        'phone' => null,
+                        'email' => null,
+                        'website' => null,
+                        'timezone' => $property->time_zone,
+                        'currency' => $property->currency_code,
+                        'bank_iban' => $property->bank_account_iban,
+                        'bank_bic' => $property->bank_account_bic,
+                        'bank_name' => $property->bank_account_holder,
+                        'status' => $property->status,
+                        'external_created_at' => $property->created,
+                    ]
+                );
+                $transformedCount['hotels']++;
+
+                // 2. Transform Apaleo Unit Groups to Room Types
+                foreach ($property->unitGroups as $unitGroup) {
+                    $roomType = RoomType::updateOrCreate(
+                        [
+                            'hotel_id' => $hotel->id,
+                            'external_id' => $unitGroup->apaleo_id,
+                        ],
+                        [
+                            'code' => $unitGroup->code,
+                            'name' => $unitGroup->name,
+                            'description' => $unitGroup->description,
+                            'max_occupancy' => $unitGroup->max_persons,
+                            'member_count' => $unitGroup->member_count,
+                            'type' => $unitGroup->type,
+                        ]
+                    );
+                    $transformedCount['room_types']++;
+
+                    // 3. Transform Apaleo Units to Rooms
+                    foreach ($unitGroup->units as $unit) {
+                        Room::updateOrCreate(
+                            [
+                                'room_type_id' => $roomType->id,
+                                'external_id' => $unit->apaleo_id,
+                            ],
+                            [
+                                'name' => $unit->name,
+                                'number' => $unit->name, // Use name as number for Apaleo
+                                'description' => $unit->description,
+                                'status' => $this->mapRoomStatus($unit->status, 'apaleo'),
+                            ]
+                        );
+                        $transformedCount['rooms']++;
+                    }
+                }
+            }
+
+            // 1. Transform Mews Enterprises to Hotels
+            $mewsEnterprises = MewsEnterprise::with(['services.resourceCategories'])->get();
+            
+            // Pre-load all resource-category assignments to avoid N+1 queries
+            $resourceCategoryMap = \DB::table('mews_resource_category_assignments')
+                ->select('resource_id', 'resource_category_id')
+                ->get()
+                ->groupBy('resource_category_id');
+            
+            foreach ($mewsEnterprises as $enterprise) {
+                $hotel = Hotel::updateOrCreate(
+                    [
+                        'pms_system_id' => $mewsPms->id,
+                        'external_id' => $enterprise->mews_id,
+                    ],
+                    [
+                        'name' => $enterprise->name,
+                        'address' => $enterprise->address_line1,
+                        'city' => $enterprise->city,
+                        'country' => $enterprise->country_code,
+                        'postal_code' => $enterprise->postal_code,
+                        'phone' => $enterprise->telephone,
+                        'email' => $enterprise->email,
+                        'website' => $enterprise->website_url,
+                        'timezone' => $enterprise->timezone,
+                        'tax_id' => $enterprise->tax_identifier,
+                        'external_created_at' => $enterprise->mews_created_utc,
+                    ]
+                );
+                $transformedCount['hotels']++;
+
+                // 2. Transform Mews Resource Categories to Room Types
+                foreach ($enterprise->services as $service) {
+                    foreach ($service->resourceCategories as $category) {
+                        $roomType = RoomType::updateOrCreate(
+                            [
+                                'hotel_id' => $hotel->id,
+                                'external_id' => $category->mews_id,
+                            ],
+                            [
+                                'code' => $category->external_identifier,
+                                'name' => $category->name,
+                                'description' => $category->description,
+                                'max_occupancy' => $category->capacity,
+                                'type' => $category->type,
+                            ]
+                        );
+                        $transformedCount['room_types']++;
+
+                        // 3. Transform Mews Resources to Rooms
+                        // Get resource IDs for this category from the pre-loaded map
+                        $resourceIds = $resourceCategoryMap->get($category->mews_id, collect())
+                            ->pluck('resource_id')
+                            ->toArray();
+                        
+                        if (!empty($resourceIds)) {
+                            $resources = MewsResource::whereIn('mews_id', $resourceIds)->get();
+                            
+                            foreach ($resources as $resource) {
+                                Room::updateOrCreate(
+                                    [
+                                        'room_type_id' => $roomType->id,
+                                        'external_id' => $resource->mews_id,
+                                    ],
+                                    [
+                                        'name' => $resource->name,
+                                        'number' => $resource->name,
+                                        'description' => null,
+                                        'status' => $this->mapRoomStatus($resource->state, 'mews'),
+                                    ]
+                                );
+                                $transformedCount['rooms']++;
+                            }
+                        }
+                    }
+                }
+            }
+
+            \DB::commit();
+
+            $message = sprintf(
+                'Successfully transformed PMS data: %d hotels, %d room types, %d rooms',
+                $transformedCount['hotels'],
+                $transformedCount['room_types'],
+                $transformedCount['rooms']
+            );
+
+            return redirect()->back()->with('success', $message);
+
+        } catch (\Exception $e) {
+            \DB::rollBack();
+            \Log::error('PMS Data Transformation failed: ' . $e->getMessage(), [
+                'exception' => $e,
+                'trace' => $e->getTraceAsString()
+            ]);
+            return redirect()->back()->with('error', 'PMS Data Transformation failed: ' . $e->getMessage());
+        }
     }
 
     private function getAllStats(): array
@@ -153,5 +336,39 @@ class DashboardController extends Controller
         // For now, return the same stats as getAllStats since we're focusing on Apaleo data
         // In the future, this could filter by specific property if needed
         return $this->getAllStats();
+    }
+
+    /**
+     * Map PMS-specific status values to the allowed room status enum values
+     * Allowed values: 'available', 'occupied', 'maintenance', 'out_of_order'
+     */
+    private function mapRoomStatus(?string $pmsStatus, string $pmsType = 'apaleo'): string
+    {
+        if (!$pmsStatus) {
+            return 'available';
+        }
+
+        $statusLower = strtolower($pmsStatus);
+
+        // Apaleo status mapping
+        if ($pmsType === 'apaleo') {
+            return match ($statusLower) {
+                'vacant' => 'available',
+                'occupied' => 'occupied',
+                default => 'available',
+            };
+        }
+
+        // Mews status mapping (state field)
+        if ($pmsType === 'mews') {
+            return match ($statusLower) {
+                'clean', 'inspected' => 'available',
+                'dirty' => 'maintenance',
+                'outoforder', 'outofservice' => 'out_of_order',
+                default => 'available',
+            };
+        }
+
+        return 'available';
     }
 }
