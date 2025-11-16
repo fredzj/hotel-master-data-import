@@ -147,6 +147,7 @@
                             </a>
                         </li>
                         
+                        @if($apaleoHasData ?? false)
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="apaleoDropdown" role="button" data-bs-toggle="dropdown">
                                 <i class="fas fa-building"></i> Apaleo Data
@@ -166,6 +167,7 @@
                                 </a></li>
                             </ul>
                         </li>
+                        @endif
                         
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="mewsDropdown" role="button" data-bs-toggle="dropdown">
@@ -195,7 +197,7 @@
                         
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="legacyDropdown" role="button" data-bs-toggle="dropdown">
-                                <i class="fas fa-database"></i> Legacy Data
+                                <i class="fas fa-database"></i> Transformed Data
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="{{ route('hotels.index') }}">
