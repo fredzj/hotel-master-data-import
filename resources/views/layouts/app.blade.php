@@ -169,6 +169,7 @@
                         </li>
                         @endif
                         
+                        @if($mewsHasData ?? false)
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="mewsDropdown" role="button" data-bs-toggle="dropdown">
                                 <i class="fas fa-server"></i> Mews Data
@@ -192,8 +193,9 @@
                                 <li><a class="dropdown-item" href="{{ route('mews-resource-features.index') }}">
                                     <i class="fas fa-star"></i> Resource Features
                                 </a></li>
-                            </ul>
+            </ul>
                         </li>
+                        @endif
                         
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="legacyDropdown" role="button" data-bs-toggle="dropdown">
