@@ -6,10 +6,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                    <h4>Room Attributes</h4>
-                    <a href="{{ route('dashboard') }}" class="btn btn-secondary">
-                        <i class="fas fa-arrow-left"></i> Back to Dashboard
-                    </a>
+                    <h4>Transformed Room Attributes</h4>
                 </div>
 
                 <div class="card-body">
@@ -26,7 +23,7 @@
                                 <thead>
                                     <tr>
                                         <th>
-                                            <a href="{{ request()->fullUrlWithQuery(['sort' => 'id', 'direction' => request('sort') == 'id' && request('direction') == 'asc' ? 'desc' : 'asc']) }}" class="text-decoration-none text-dark">
+                                            <a href="{{ request()->fullUrlWithQuery(['sort' => 'id', 'direction' => request('sort') == 'id' && request('direction') == 'asc' ? 'desc' : 'asc']) }}" class="text-decoration-none text-body">
                                                 ID
                                                 @if(request('sort') == 'id')
                                                     <i class="fas fa-sort-{{ request('direction') == 'asc' ? 'up' : 'down' }} ms-1"></i>
@@ -36,7 +33,7 @@
                                             </a>
                                         </th>
                                         <th>
-                                            <a href="{{ request()->fullUrlWithQuery(['sort' => 'room_name', 'direction' => request('sort') == 'room_name' && request('direction') == 'asc' ? 'desc' : 'asc']) }}" class="text-decoration-none text-dark">
+                                            <a href="{{ request()->fullUrlWithQuery(['sort' => 'room_name', 'direction' => request('sort') == 'room_name' && request('direction') == 'asc' ? 'desc' : 'asc']) }}" class="text-decoration-none text-body">
                                                 Room
                                                 @if(request('sort') == 'room_name')
                                                     <i class="fas fa-sort-{{ request('direction') == 'asc' ? 'up' : 'down' }} ms-1"></i>
@@ -46,7 +43,7 @@
                                             </a>
                                         </th>
                                         <th>
-                                            <a href="{{ request()->fullUrlWithQuery(['sort' => 'hotel_name', 'direction' => request('sort') == 'hotel_name' && request('direction') == 'asc' ? 'desc' : 'asc']) }}" class="text-decoration-none text-dark">
+                                            <a href="{{ request()->fullUrlWithQuery(['sort' => 'hotel_name', 'direction' => request('sort') == 'hotel_name' && request('direction') == 'asc' ? 'desc' : 'asc']) }}" class="text-decoration-none text-body">
                                                 Hotel
                                                 @if(request('sort') == 'hotel_name')
                                                     <i class="fas fa-sort-{{ request('direction') == 'asc' ? 'up' : 'down' }} ms-1"></i>
@@ -56,7 +53,7 @@
                                             </a>
                                         </th>
                                         <th>
-                                            <a href="{{ request()->fullUrlWithQuery(['sort' => 'type', 'direction' => request('sort') == 'type' && request('direction') == 'asc' ? 'desc' : 'asc']) }}" class="text-decoration-none text-dark">
+                                            <a href="{{ request()->fullUrlWithQuery(['sort' => 'type', 'direction' => request('sort') == 'type' && request('direction') == 'asc' ? 'desc' : 'asc']) }}" class="text-decoration-none text-body">
                                                 Attribute Type
                                                 @if(request('sort') == 'type')
                                                     <i class="fas fa-sort-{{ request('direction') == 'asc' ? 'up' : 'down' }} ms-1"></i>
@@ -66,7 +63,7 @@
                                             </a>
                                         </th>
                                         <th>
-                                            <a href="{{ request()->fullUrlWithQuery(['sort' => 'name', 'direction' => request('sort') == 'name' && request('direction') == 'asc' ? 'desc' : 'asc']) }}" class="text-decoration-none text-dark">
+                                            <a href="{{ request()->fullUrlWithQuery(['sort' => 'name', 'direction' => request('sort') == 'name' && request('direction') == 'asc' ? 'desc' : 'asc']) }}" class="text-decoration-none text-body">
                                                 Name
                                                 @if(request('sort') == 'name')
                                                     <i class="fas fa-sort-{{ request('direction') == 'asc' ? 'up' : 'down' }} ms-1"></i>
@@ -76,7 +73,7 @@
                                             </a>
                                         </th>
                                         <th>
-                                            <a href="{{ request()->fullUrlWithQuery(['sort' => 'value', 'direction' => request('sort') == 'value' && request('direction') == 'asc' ? 'desc' : 'asc']) }}" class="text-decoration-none text-dark">
+                                            <a href="{{ request()->fullUrlWithQuery(['sort' => 'value', 'direction' => request('sort') == 'value' && request('direction') == 'asc' ? 'desc' : 'asc']) }}" class="text-decoration-none text-body">
                                                 Value
                                                 @if(request('sort') == 'value')
                                                     <i class="fas fa-sort-{{ request('direction') == 'asc' ? 'up' : 'down' }} ms-1"></i>

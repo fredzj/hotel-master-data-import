@@ -6,17 +6,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                    <h4>Room Types</h4>
-                    <div>
-                        @can('create_room_types')
-                            <a href="{{ route('room-types.create') }}" class="btn btn-success me-2">
-                                <i class="fas fa-plus"></i> New Room Type
-                            </a>
-                        @endcan
-                        <a href="{{ route('dashboard') }}" class="btn btn-secondary">
-                            <i class="fas fa-arrow-left"></i> Back to Dashboard
-                        </a>
-                    </div>
+                    <h4>Transformed Room Types</h4>
                 </div>
 
                 <div class="card-body">
@@ -32,7 +22,7 @@
                             <thead>
                                 <tr>
                                     <th>
-                                        <a href="{{ request()->fullUrlWithQuery(['sort' => 'code', 'direction' => request('sort') == 'code' && request('direction') == 'asc' ? 'desc' : 'asc']) }}" class="text-decoration-none text-dark">
+                                        <a href="{{ request()->fullUrlWithQuery(['sort' => 'code', 'direction' => request('sort') == 'code' && request('direction') == 'asc' ? 'desc' : 'asc']) }}" class="text-decoration-none text-body">
                                             Code
                                             @if(request('sort') == 'code')
                                                 <i class="fas fa-sort-{{ request('direction') == 'asc' ? 'up' : 'down' }} ms-1"></i>
@@ -42,7 +32,7 @@
                                         </a>
                                     </th>
                                     <th>
-                                        <a href="{{ request()->fullUrlWithQuery(['sort' => 'name', 'direction' => request('sort') == 'name' && request('direction') == 'asc' ? 'desc' : 'asc']) }}" class="text-decoration-none text-dark">
+                                        <a href="{{ request()->fullUrlWithQuery(['sort' => 'name', 'direction' => request('sort') == 'name' && request('direction') == 'asc' ? 'desc' : 'asc']) }}" class="text-decoration-none text-body">
                                             Name
                                             @if(request('sort') == 'name')
                                                 <i class="fas fa-sort-{{ request('direction') == 'asc' ? 'up' : 'down' }} ms-1"></i>
@@ -53,7 +43,7 @@
                                     </th>
                                     <th>Hotel</th>
                                     <th>
-                                        <a href="{{ request()->fullUrlWithQuery(['sort' => 'type', 'direction' => request('sort') == 'type' && request('direction') == 'asc' ? 'desc' : 'asc']) }}" class="text-decoration-none text-dark">
+                                        <a href="{{ request()->fullUrlWithQuery(['sort' => 'type', 'direction' => request('sort') == 'type' && request('direction') == 'asc' ? 'desc' : 'asc']) }}" class="text-decoration-none text-body">
                                             Type
                                             @if(request('sort') == 'type')
                                                 <i class="fas fa-sort-{{ request('direction') == 'asc' ? 'up' : 'down' }} ms-1"></i>
@@ -63,7 +53,7 @@
                                         </a>
                                     </th>
                                     <th>
-                                        <a href="{{ request()->fullUrlWithQuery(['sort' => 'max_occupancy', 'direction' => request('sort') == 'max_occupancy' && request('direction') == 'asc' ? 'desc' : 'asc']) }}" class="text-decoration-none text-dark">
+                                        <a href="{{ request()->fullUrlWithQuery(['sort' => 'max_occupancy', 'direction' => request('sort') == 'max_occupancy' && request('direction') == 'asc' ? 'desc' : 'asc']) }}" class="text-decoration-none text-body">
                                             Max Occupancy
                                             @if(request('sort') == 'max_occupancy')
                                                 <i class="fas fa-sort-{{ request('direction') == 'asc' ? 'up' : 'down' }} ms-1"></i>
@@ -73,7 +63,7 @@
                                         </a>
                                     </th>
                                     <th>
-                                        <a href="{{ request()->fullUrlWithQuery(['sort' => 'units_available', 'direction' => request('sort') == 'units_available' && request('direction') == 'asc' ? 'desc' : 'asc']) }}" class="text-decoration-none text-dark">
+                                        <a href="{{ request()->fullUrlWithQuery(['sort' => 'units_available', 'direction' => request('sort') == 'units_available' && request('direction') == 'asc' ? 'desc' : 'asc']) }}" class="text-decoration-none text-body">
                                             Units Available
                                             @if(request('sort') == 'units_available')
                                                 <i class="fas fa-sort-{{ request('direction') == 'asc' ? 'up' : 'down' }} ms-1"></i>
