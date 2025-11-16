@@ -19,6 +19,8 @@
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     
+    @yield('styles')
+    
     <!-- Custom Styles -->
     <style>
         /* Fix pagination arrow sizes */

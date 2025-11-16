@@ -26,6 +26,24 @@
     transition: all 0.3s ease;
 }
 
+a.text-decoration-none:hover .card {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+a.text-decoration-none:hover .card i {
+    color: #0d6efd !important;
+    transition: color 0.3s ease;
+}
+
+a.text-decoration-none .card {
+    cursor: pointer;
+}
+
+a.text-decoration-none .card i {
+    transition: color 0.3s ease;
+}
+
 .hover-shadow:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
