@@ -227,16 +227,27 @@ class MewsAdapter implements PmsAdapterInterface
             $categoryAssignments = $data['ResourceCategoryAssignments'] ?? [];
             $imported = [];
 
+            Log::info("Mews API returned " . count($resources) . " resources and " . count($categoryAssignments) . " category assignments");
+
             // Import resources in hierarchical order (parents first)
             $this->importResourcesHierarchically($resources, $imported);
             
 
             // Import category assignments
+            $assignmentsImported = 0;
             foreach ($categoryAssignments as $assignment) {
                 $this->importResourceCategoryAssignment($assignment);
+                $assignmentsImported++;
             }
 
-            Log::info("Imported " . count($imported) . " resources from Mews");
+            Log::info("Imported " . count($imported) . " resources and " . $assignmentsImported . " category assignments from Mews");
+            
+            // If no assignments were returned by API, try to extract from resource data
+            if ($assignmentsImported === 0 && !empty($resources)) {
+                Log::warning("No ResourceCategoryAssignments in API response, attempting to extract from resource data");
+                $this->extractCategoryAssignmentsFromResources($resources);
+            }
+
             return $imported;
 
         } catch (\Exception $e) {
@@ -759,5 +770,38 @@ class MewsAdapter implements PmsAdapterInterface
         } catch (\Exception $e) {
             Log::warning("Failed to import resource {$resourceId}: " . $e->getMessage(), ['data' => $resourceData]);
         }
+    }
+
+    /**
+     * Extract category assignments from resource data when API doesn't provide them separately
+     */
+    private function extractCategoryAssignmentsFromResources(array $resources): void
+    {
+        $assignmentsCreated = 0;
+        
+        foreach ($resources as $resource) {
+            // Check if resource has CategoryId or ResourceCategoryId field
+            $categoryId = null;
+            
+            if (isset($resource['CategoryId'])) {
+                $categoryId = $resource['CategoryId'];
+            } elseif (isset($resource['ResourceCategoryId'])) {
+                $categoryId = $resource['ResourceCategoryId'];
+            }
+            
+            if ($categoryId) {
+                try {
+                    $this->importResourceCategoryAssignment([
+                        'ResourceId' => $resource['Id'],
+                        'CategoryId' => $categoryId,
+                    ]);
+                    $assignmentsCreated++;
+                } catch (\Exception $e) {
+                    Log::warning("Failed to create category assignment from resource data: " . $e->getMessage());
+                }
+            }
+        }
+        
+        Log::info("Created " . $assignmentsCreated . " category assignments from resource data");
     }
 }
