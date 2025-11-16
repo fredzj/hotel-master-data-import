@@ -26,6 +26,11 @@
     transition: all 0.3s ease;
 }
 
+.hover-shadow:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
 .import-success {
     animation: pulse-success 2s infinite;
 }
@@ -308,7 +313,10 @@
                             <div class="row">
                                 <!-- First row of cards -->
                                 <div class="col-md-3 mb-3">
-                                    <div class="card bg-secondary-subtle">
+                                    @if(($stats['hotels'] ?? 0) > 0)
+                                        <a href="{{ route('hotels.index') }}" class="text-decoration-none">
+                                    @endif
+                                    <div class="card bg-secondary-subtle{{ ($stats['hotels'] ?? 0) > 0 ? ' hover-shadow' : '' }}" style="{{ ($stats['hotels'] ?? 0) > 0 ? 'cursor: pointer;' : '' }}">
                                         <div class="card-body">
                                             <div class="d-flex justify-content-between">
                                                 <div>
@@ -321,6 +329,9 @@
                                             </div>
                                         </div>
                                     </div>
+                                    @if(($stats['hotels'] ?? 0) > 0)
+                                        </a>
+                                    @endif
                                 </div>
                                 
                                 <div class="col-md-3 mb-3">
@@ -356,7 +367,10 @@
                                 </div>
                                 
                                 <div class="col-md-3 mb-3">
-                                    <div class="card bg-secondary-subtle">
+                                    @if(($stats['room_types'] ?? 0) > 0)
+                                        <a href="{{ route('room-types.index') }}" class="text-decoration-none">
+                                    @endif
+                                    <div class="card bg-secondary-subtle{{ ($stats['room_types'] ?? 0) > 0 ? ' hover-shadow' : '' }}" style="{{ ($stats['room_types'] ?? 0) > 0 ? 'cursor: pointer;' : '' }}">
                                         <div class="card-body">
                                             <div class="d-flex justify-content-between">
                                                 <div>
@@ -369,11 +383,17 @@
                                             </div>
                                         </div>
                                     </div>
+                                    @if(($stats['room_types'] ?? 0) > 0)
+                                        </a>
+                                    @endif
                                 </div>
                                 
                                 <!-- Second row of cards -->
                                 <div class="col-md-3 mb-3">
-                                    <div class="card bg-secondary-subtle">
+                                    @if(($stats['rooms'] ?? 0) > 0)
+                                        <a href="{{ route('rooms.index') }}" class="text-decoration-none">
+                                    @endif
+                                    <div class="card bg-secondary-subtle{{ ($stats['rooms'] ?? 0) > 0 ? ' hover-shadow' : '' }}" style="{{ ($stats['rooms'] ?? 0) > 0 ? 'cursor: pointer;' : '' }}">
                                         <div class="card-body">
                                             <div class="d-flex justify-content-between">
                                                 <div>
@@ -386,6 +406,9 @@
                                             </div>
                                         </div>
                                     </div>
+                                    @if(($stats['rooms'] ?? 0) > 0)
+                                        </a>
+                                    @endif
                                 </div>
                                 
                                 <div class="col-md-3 mb-3">
