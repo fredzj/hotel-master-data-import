@@ -586,6 +586,13 @@ document.addEventListener('DOMContentLoaded', function() {
             }, 2000); // Check every 2 seconds
         });
     });
+
+    // Auto-reload page after transformation completes
+    @if(session('success') && str_contains(session('success'), 'transformed PMS data'))
+        setTimeout(() => {
+            window.location.reload();
+        }, 2000); // Reload after 2 seconds to show the success message first
+    @endif
 });
 </script>
 @endsection
