@@ -197,6 +197,7 @@
                         </li>
                         @endif
                         
+                        @if($transformedHasData ?? false)
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="legacyDropdown" role="button" data-bs-toggle="dropdown">
                                 <i class="fas fa-database"></i> Transformed Data
@@ -216,6 +217,7 @@
                                 </a></li>
                             </ul>
                         </li>
+                        @endif
                         @endauth
                     </ul>
 

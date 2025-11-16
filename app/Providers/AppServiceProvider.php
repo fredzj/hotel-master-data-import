@@ -13,6 +13,13 @@ use App\Models\MewsService;
 use App\Models\MewsResourceCategory;
 use App\Models\MewsResource;
 use App\Models\MewsResourceFeature;
+use App\Models\Hotel;
+use App\Models\Building;
+use App\Models\Floor;
+use App\Models\RoomType;
+use App\Models\Room;
+use App\Models\SunbedArea;
+use App\Models\Sunbed;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -42,8 +49,18 @@ class AppServiceProvider extends ServiceProvider
                 || MewsResource::count() > 0 
                 || MewsResourceFeature::count() > 0;
 
+            $transformedHasData = Hotel::count() > 0 
+                || Building::count() > 0 
+                || Floor::count() > 0 
+                || RoomType::count() > 0 
+                || Room::count() > 0 
+                || SunbedArea::count() > 0 
+                || \App\Models\SunbedType::count() > 0 
+                || Sunbed::count() > 0;
+
             $view->with('apaleoHasData', $apaleoHasData);
             $view->with('mewsHasData', $mewsHasData);
+            $view->with('transformedHasData', $transformedHasData);
         });
     }
 }
