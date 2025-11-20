@@ -8,6 +8,9 @@
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <h4>Room Details: {{ $room->name }}</h4>
                     <div>
+                        <a href="{{ route('rooms.edit', $room) }}" class="btn btn-warning">
+                            <i class="fas fa-edit"></i> Edit
+                        </a>
                         <a href="{{ route('rooms.index') }}" class="btn btn-secondary">
                             <i class="fas fa-arrow-left"></i> Back to Rooms
                         </a>
@@ -177,34 +180,6 @@
                         </div>
                     </div>
                     @endif
-
-                    <!-- Actions Section -->
-                    <div class="card mt-4">
-                        <div class="card-header">
-                            <h5><i class="fas fa-cogs"></i> Actions</h5>
-                        </div>
-                        <div class="card-body">
-                            <div class="btn-group" role="group">
-                                @can('edit_rooms')
-                                    <a href="{{ route('rooms.edit', $room) }}" class="btn btn-warning">
-                                        <i class="fas fa-edit"></i> Edit Room
-                                    </a>
-                                @endcan
-                                
-                                @can('delete_rooms')
-                                    <form method="POST" action="{{ route('rooms.destroy', $room) }}" 
-                                          onsubmit="return confirm('Are you sure you want to delete this room?')" 
-                                          class="d-inline">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger">
-                                            <i class="fas fa-trash"></i> Delete Room
-                                        </button>
-                                    </form>
-                                @endcan
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>

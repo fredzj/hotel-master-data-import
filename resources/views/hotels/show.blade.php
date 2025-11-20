@@ -6,12 +6,16 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                    <h5 class="mb-0">Hotel Details: {{ $hotel->name }}</h5>
+                    <h4>Hotel Details: {{ $hotel->name }}</h4>
                     <div>
                         @can('manage_hotels')
-                            <a href="{{ route('hotels.edit', $hotel) }}" class="btn btn-primary btn-sm">Edit</a>
+                            <a href="{{ route('hotels.edit', $hotel) }}" class="btn btn-warning">
+                                <i class="fas fa-edit"></i> Edit
+                            </a>
                         @endcan
-                        <a href="{{ route('hotels.index') }}" class="btn btn-secondary btn-sm">Back to Hotels</a>
+                        <a href="{{ route('hotels.index') }}" class="btn btn-secondary">
+                            <i class="fas fa-arrow-left"></i> Back to Hotels
+                        </a>
                     </div>
                 </div>
                 <div class="card-body">

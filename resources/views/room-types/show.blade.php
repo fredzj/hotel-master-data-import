@@ -6,10 +6,14 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                    <h5 class="mb-0">Room Type Details: {{ $roomType->name }}</h5>
+                    <h4>Room Type Details: {{ $roomType->name }}</h4>
                     <div>
-                        <a href="{{ route('hotels.show', $roomType->hotel) }}" class="btn btn-info btn-sm">View Hotel</a>
-                        <a href="{{ route('room-types.index') }}" class="btn btn-secondary btn-sm">Back to Room Types</a>
+                        <a href="{{ route('room-types.edit', $roomType) }}" class="btn btn-warning">
+                            <i class="fas fa-edit"></i> Edit
+                        </a>
+                        <a href="{{ route('room-types.index') }}" class="btn btn-secondary">
+                            <i class="fas fa-arrow-left"></i> Back to Room Types
+                        </a>
                     </div>
                 </div>
                 <div class="card-body">
@@ -94,7 +98,7 @@
                         <div class="row mt-4">
                             <div class="col-12">
                                 <h6 class="text-muted">Description</h6>
-                                <div class="card bg-light">
+                                <div class="card">
                                     <div class="card-body">
                                         {{ $roomType->description }}
                                     </div>
@@ -109,7 +113,7 @@
                             <h6 class="text-muted">Individual Rooms</h6>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <div class="card bg-light">
+                                    <div class="card">
                                         <div class="card-body text-center">
                                             <h5 class="card-title">{{ $roomType->rooms->count() }}</h5>
                                             <p class="card-text">Individual Rooms</p>
@@ -122,41 +126,6 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-
-                    <!-- Actions Section -->
-                    <div class="card mt-4">
-                        <div class="card-header">
-                            <h5><i class="fas fa-cogs"></i> Actions</h5>
-                        </div>
-                        <div class="card-body">
-                            <div class="btn-group" role="group">
-                                @can('edit_room_types')
-                                    <a href="{{ route('room-types.edit', $roomType) }}" class="btn btn-warning">
-                                        <i class="fas fa-edit"></i> Edit Room Type
-                                    </a>
-                                @endcan
-                                
-                                @can('delete_room_types')
-                                    <form method="POST" action="{{ route('room-types.destroy', $roomType) }}" 
-                                          onsubmit="return confirm('Are you sure you want to delete this room type? This will affect {{ $roomType->rooms->count() }} associated room(s).')" 
-                                          class="d-inline">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger" {{ $roomType->rooms->count() > 0 ? 'disabled' : '' }}>
-                                            <i class="fas fa-trash"></i> Delete Room Type
-                                        </button>
-                                    </form>
-                                @endcan
-                            </div>
-                            
-                            @if($roomType->rooms->count() > 0)
-                                <div class="alert alert-warning mt-3 mb-0">
-                                    <i class="fas fa-exclamation-triangle"></i>
-                                    <strong>Note:</strong> This room type cannot be deleted because it has {{ $roomType->rooms->count() }} associated room(s).
-                                </div>
-                            @endif
                         </div>
                     </div>
                 </div>
