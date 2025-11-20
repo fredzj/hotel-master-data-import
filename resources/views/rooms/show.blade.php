@@ -38,7 +38,7 @@
                                 <tr>
                                     <th>Status</th>
                                     <td>
-                                        <span class="badge bg-{{ 
+                                        <span class="badge text-bg-{{ 
                                             $room->status === 'available' ? 'success' : 
                                             ($room->status === 'out_of_order' ? 'danger' : 
                                             ($room->status === 'maintenance' ? 'warning' : 'secondary')) 

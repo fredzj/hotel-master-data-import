@@ -43,7 +43,7 @@
                                 <tr>
                                     <td><strong>Status:</strong></td>
                                     <td>
-                                        <span class="badge bg-{{ $hotel->status === 'Active' ? 'success' : ($hotel->status === 'Test' ? 'warning' : 'secondary') }}">
+                                        <span class="badge text-bg-{{ $hotel->status === 'Active' ? 'success' : ($hotel->status === 'Test' ? 'warning' : 'secondary') }}">
                                             {{ $hotel->status ?? 'Unknown' }}
                                         </span>
                                     </td>

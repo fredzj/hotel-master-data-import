@@ -58,7 +58,7 @@
                                     <td><strong>Maximum Occupancy:</strong></td>
                                     <td>
                                         @if($roomType->max_occupancy)
-                                            <span class="badge bg-success">{{ $roomType->max_occupancy }} person{{ $roomType->max_occupancy > 1 ? 's' : '' }}</span>
+                                            {{ $roomType->max_occupancy }} person{{ $roomType->max_occupancy > 1 ? 's' : '' }}
                                         @else
                                             N/A
                                         @endif
