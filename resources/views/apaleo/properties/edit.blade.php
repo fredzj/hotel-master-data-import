@@ -7,14 +7,9 @@
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <h4>Edit Property: {{ $apaleoProperty->name }}</h4>
-                    <div>
-                        <a href="{{ route('apaleo-properties.show', $apaleoProperty) }}" class="btn btn-info">
-                            <i class="fas fa-eye"></i> View
-                        </a>
-                        <a href="{{ route('apaleo-properties.index') }}" class="btn btn-secondary">
-                            <i class="fas fa-arrow-left"></i> Back to Properties
-                        </a>
-                    </div>
+                    <a href="{{ route('apaleo-properties.index') }}" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left"></i> Back to Properties
+                    </a>
                 </div>
 
                 <div class="card-body">

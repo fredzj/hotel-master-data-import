@@ -8,14 +8,9 @@
                 <div class="card-header">
                     <div class="d-flex justify-content-between align-items-center">
                         <h4 class="mb-0">Edit Resource Category: {{ $category->name }}</h4>
-                        <div>
-                            <a href="{{ route('mews-resource-categories.show', $category) }}" class="btn btn-info btn-sm">
-                                <i class="fas fa-eye"></i> View
-                            </a>
-                            <a href="{{ route('mews-resource-categories.index') }}" class="btn btn-secondary btn-sm">
-                                <i class="fas fa-arrow-left"></i> Back to List
-                            </a>
-                        </div>
+                        <a href="{{ route('mews-resource-categories.index') }}" class="btn btn-secondary btn-sm">
+                            <i class="fas fa-arrow-left"></i> Back to List
+                        </a>
                     </div>
                 </div>
 

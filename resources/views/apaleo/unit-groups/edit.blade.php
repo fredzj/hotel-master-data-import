@@ -7,14 +7,9 @@
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <h4>Edit Unit Group: {{ $apaleoUnitGroup->name }}</h4>
-                    <div>
-                        <a href="{{ route('apaleo-unit-groups.show', $apaleoUnitGroup) }}" class="btn btn-info">
-                            <i class="fas fa-eye"></i> View
-                        </a>
-                        <a href="{{ route('apaleo-unit-groups.index') }}" class="btn btn-secondary">
-                            <i class="fas fa-arrow-left"></i> Back to Unit Groups
-                        </a>
-                    </div>
+                    <a href="{{ route('apaleo-unit-groups.index') }}" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left"></i> Back to Unit Groups
+                    </a>
                 </div>
 
                 <div class="card-body">
