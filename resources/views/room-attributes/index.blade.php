@@ -119,14 +119,18 @@
                                                 @endif
                                             </td>
                                             <td>
-                                                <a href="{{ route('room-attributes.show', $attribute) }}" class="btn btn-sm btn-info">
-                                                    <i class="fas fa-eye"></i> View
-                                                </a>
-                                                @can('update_room_attributes')
-                                                    <a href="{{ route('room-attributes.edit', $attribute) }}" class="btn btn-sm btn-warning">
-                                                        <i class="fas fa-edit"></i> Edit
+                                                <div class="btn-group gap-1" role="group">
+                                                    <a href="{{ route('room-attributes.show', $attribute) }}" 
+                                                       class="btn btn-outline-info btn-sm" title="View">
+                                                        <i class="fas fa-eye"></i>
                                                     </a>
-                                                @endcan
+                                                    @can('update_room_attributes')
+                                                        <a href="{{ route('room-attributes.edit', $attribute) }}" 
+                                                           class="btn btn-outline-warning btn-sm" title="Edit">
+                                                            <i class="fas fa-edit"></i>
+                                                        </a>
+                                                    @endcan
+                                                </div>
                                             </td>
                                         </tr>
                                     @endforeach

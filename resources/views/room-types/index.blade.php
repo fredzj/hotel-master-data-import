@@ -102,11 +102,13 @@
                                     </td>
                                     <td>
                                         <div class="btn-group gap-1" role="group">
-                                            <a href="{{ route('room-types.show', $roomType) }}" class="btn btn-sm btn-outline-primary">
+                                            <a href="{{ route('room-types.show', $roomType) }}" 
+                                               class="btn btn-outline-info btn-sm" title="View">
                                                 <i class="fas fa-eye"></i>
                                             </a>
                                             @can('edit_room_types')
-                                                <a href="{{ route('room-types.edit', $roomType) }}" class="btn btn-sm btn-warning">
+                                                <a href="{{ route('room-types.edit', $roomType) }}" 
+                                                   class="btn btn-outline-warning btn-sm" title="Edit">
                                                     <i class="fas fa-edit"></i>
                                                 </a>
                                             @endcan

@@ -118,18 +118,21 @@
                                     <td>{{ $hotel->currency ?? 'N/A' }}</td>
                                     <td>
                                         <div class="btn-group gap-1" role="group">
-                                            <a href="{{ route('hotels.show', $hotel) }}" class="btn btn-sm btn-outline-primary">
+                                            <a href="{{ route('hotels.show', $hotel) }}" 
+                                               class="btn btn-outline-info btn-sm" title="View">
                                                 <i class="fas fa-eye"></i>
                                             </a>
                                             @can('manage_hotels')
-                                            <a href="{{ route('hotels.edit', $hotel) }}" class="btn btn-sm btn-outline-warning">
+                                            <a href="{{ route('hotels.edit', $hotel) }}" 
+                                               class="btn btn-outline-warning btn-sm" title="Edit">
                                                 <i class="fas fa-edit"></i>
                                             </a>
-                                            <form method="POST" action="{{ route('hotels.destroy', $hotel) }}" style="display: inline;" 
+                                            <form method="POST" action="{{ route('hotels.destroy', $hotel) }}" 
+                                                  style="display: inline-block;" 
                                                   onsubmit="return confirm('Are you sure you want to delete this hotel?');">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-sm btn-outline-danger">
+                                                <button type="submit" class="btn btn-outline-danger btn-sm" title="Delete">
                                                     <i class="fas fa-trash"></i>
                                                 </button>
                                             </form>
