@@ -193,7 +193,7 @@
                             <h6 class="text-muted">Related Data</h6>
                             <div class="row">
                                 <div class="col-md-3">
-                                    <div class="card bg-light">
+                                    <div class="card">
                                         <div class="card-body text-center">
                                             <h5 class="card-title">{{ $hotel->buildings->count() }}</h5>
                                             <p class="card-text">Buildings</p>
@@ -201,7 +201,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-3">
-                                    <div class="card bg-light">
+                                    <div class="card">
                                         <div class="card-body text-center">
                                             <h5 class="card-title">{{ $hotel->roomTypes->count() }}</h5>
                                             <p class="card-text">Room Types</p>
@@ -209,7 +209,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-3">
-                                    <div class="card bg-light">
+                                    <div class="card">
                                         <div class="card-body text-center">
                                             <h5 class="card-title">{{ $hotel->rooms->count() }}</h5>
                                             <p class="card-text">Rooms</p>
@@ -217,7 +217,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-3">
-                                    <div class="card bg-light">
+                                    <div class="card">
                                         <div class="card-body text-center">
                                             <h5 class="card-title">0</h5>
                                             <p class="card-text">Sunbed Areas</p>
