@@ -135,7 +135,7 @@
                         </div>
 
                         <!-- Current Information Display -->
-                        <div class="card bg-light mb-4">
+                        <div class="card mb-4">
                             <div class="card-header">
                                 <h6 class="mb-0">Current Information</h6>
                             </div>
