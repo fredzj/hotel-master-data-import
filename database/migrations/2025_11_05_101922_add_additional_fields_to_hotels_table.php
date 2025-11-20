@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('hotels', function (Blueprint $table) {
+        Schema::table('transformed_hotels', function (Blueprint $table) {
             $table->text('description')->nullable()->after('email');
             $table->string('website')->nullable()->after('description');
             $table->string('timezone')->nullable()->after('website');
@@ -24,7 +24,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('hotels', function (Blueprint $table) {
+        Schema::table('transformed_hotels', function (Blueprint $table) {
             $table->dropColumn(['description', 'website', 'timezone', 'currency']);
         });
     }

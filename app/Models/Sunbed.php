@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Sunbed extends Model
 {
+    protected $table = 'transformed_sunbeds';
+
     protected $fillable = [
         'sunbed_area_id',
         'sunbed_type_id',

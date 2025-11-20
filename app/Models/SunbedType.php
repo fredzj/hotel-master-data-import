@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class SunbedType extends Model
 {
+    protected $table = 'transformed_sunbed_types';
+
     protected $fillable = [
         'name',
         'description',

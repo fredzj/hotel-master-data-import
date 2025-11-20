@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('room_types', function (Blueprint $table) {
+        Schema::table('transformed_room_types', function (Blueprint $table) {
             $table->string('code')->nullable()->after('external_id');
             $table->integer('member_count')->nullable()->after('max_occupancy'); // Number of units of this type
             $table->string('type')->nullable()->after('member_count'); // BedRoom, MeetingRoom, etc.
@@ -23,7 +23,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('room_types', function (Blueprint $table) {
+        Schema::table('transformed_room_types', function (Blueprint $table) {
             $table->dropColumn(['code', 'member_count', 'type']);
         });
     }

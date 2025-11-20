@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('room_attributes', function (Blueprint $table) {
+        Schema::table('transformed_room_attributes', function (Blueprint $table) {
             $table->foreignId('room_id')->constrained()->onDelete('cascade');
             $table->string('external_id')->nullable(); // Apaleo attribute ID
             $table->string('name');
@@ -31,7 +31,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('room_attributes', function (Blueprint $table) {
+        Schema::table('transformed_room_attributes', function (Blueprint $table) {
             $table->dropForeign(['room_id']);
             $table->dropUnique(['room_id', 'external_id']);
             $table->dropIndex(['room_id', 'code']);

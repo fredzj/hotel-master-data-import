@@ -37,18 +37,18 @@ class RoomAttributeController extends Controller
         }
         
         $query = RoomAttribute::with(['room.roomType.hotel'])
-            ->leftJoin('rooms', 'room_attributes.room_id', '=', 'rooms.id')
-            ->leftJoin('room_types', 'rooms.room_type_id', '=', 'room_types.id')
-            ->leftJoin('hotels', 'room_types.hotel_id', '=', 'hotels.id')
-            ->select('room_attributes.*');
+            ->leftJoin('transformed_rooms', 'transformed_room_attributes.room_id', '=', 'transformed_rooms.id')
+            ->leftJoin('transformed_room_types', 'transformed_rooms.room_type_id', '=', 'transformed_room_types.id')
+            ->leftJoin('transformed_hotels', 'transformed_room_types.hotel_id', '=', 'transformed_hotels.id')
+            ->select('transformed_room_attributes.*');
         
         // Handle different sort columns
         if ($sortBy == 'room_name') {
-            $query->orderBy('rooms.name', $sortDirection);
+            $query->orderBy('transformed_rooms.name', $sortDirection);
         } elseif ($sortBy == 'hotel_name') {
-            $query->orderBy('hotels.name', $sortDirection);
+            $query->orderBy('transformed_hotels.name', $sortDirection);
         } else {
-            $query->orderBy('room_attributes.' . $sortBy, $sortDirection);
+            $query->orderBy('transformed_room_attributes.' . $sortBy, $sortDirection);
         }
         
         if ($user->isSuperAdmin()) {
@@ -57,7 +57,7 @@ class RoomAttributeController extends Controller
         } else {
             // Hotel staff can only see room attributes from their assigned hotels
             $hotelIds = $user->hotels()->pluck('hotels.id');
-            $roomAttributes = $query->whereIn('hotels.id', $hotelIds)->paginate(10);
+            $roomAttributes = $query->whereIn('transformed_hotels.id', $hotelIds)->paginate(10);
         }
         
         // Append query parameters to pagination links

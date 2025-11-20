@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('rooms', function (Blueprint $table) {
+        Schema::create('transformed_rooms', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('room_type_id')->constrained('room_types')->onDelete('cascade');
-            $table->foreignId('floor_id')->nullable()->constrained('floors')->onDelete('set null');
+            $table->foreignId('room_type_id')->constrained('transformed_room_types')->onDelete('cascade');
+            $table->foreignId('floor_id')->nullable()->constrained('transformed_floors')->onDelete('set null');
             $table->string('external_id')->nullable(); // PMS specific ID
             $table->string('name');
             $table->string('number')->nullable();
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('rooms');
+        Schema::dropIfExists('transformed_rooms');
     }
 };

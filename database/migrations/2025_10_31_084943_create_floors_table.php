@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('floors', function (Blueprint $table) {
+        Schema::create('transformed_floors', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('building_id')->constrained('buildings')->onDelete('cascade');
+            $table->foreignId('building_id')->constrained('transformed_buildings')->onDelete('cascade');
             $table->string('name');
             $table->integer('level');
             $table->text('description')->nullable();
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('floors');
+        Schema::dropIfExists('transformed_floors');
     }
 };

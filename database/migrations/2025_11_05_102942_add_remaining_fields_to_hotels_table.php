@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('hotels', function (Blueprint $table) {
+        Schema::table('transformed_hotels', function (Blueprint $table) {
             // Property details
             $table->string('code')->nullable()->after('external_id');
             $table->boolean('is_template')->default(false)->after('code');
@@ -39,7 +39,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('hotels', function (Blueprint $table) {
+        Schema::table('transformed_hotels', function (Blueprint $table) {
             $table->dropColumn([
                 'code', 'is_template', 'company_name', 'commercial_register_entry', 
                 'tax_id', 'bank_iban', 'bank_bic', 'bank_name', 'payment_terms',

@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 class Hotel extends Model
 {
+    protected $table = 'transformed_hotels';
+
     protected $fillable = [
         'pms_system_id',
         'external_id',

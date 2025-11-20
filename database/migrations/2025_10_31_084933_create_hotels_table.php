@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('hotels', function (Blueprint $table) {
+        Schema::create('transformed_hotels', function (Blueprint $table) {
             $table->id();
             $table->foreignId('pms_system_id')->constrained('pms_systems')->onDelete('cascade');
             $table->string('external_id')->nullable(); // PMS specific ID
@@ -33,6 +33,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('hotels');
+        Schema::dropIfExists('transformed_hotels');
     }
 };

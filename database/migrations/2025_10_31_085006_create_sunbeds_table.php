@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('sunbeds', function (Blueprint $table) {
+        Schema::create('transformed_sunbeds', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('sunbed_area_id')->constrained('sunbed_areas')->onDelete('cascade');
-            $table->foreignId('sunbed_type_id')->constrained('sunbed_types')->onDelete('cascade');
+            $table->foreignId('sunbed_area_id')->constrained('transformed_sunbed_areas')->onDelete('cascade');
+            $table->foreignId('sunbed_type_id')->constrained('transformed_sunbed_types')->onDelete('cascade');
             $table->string('name');
             $table->string('identifier')->unique();
             $table->enum('status', ['available', 'occupied', 'maintenance', 'out_of_order'])->default('available');
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('sunbeds');
+        Schema::dropIfExists('transformed_sunbeds');
     }
 };

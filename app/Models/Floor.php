@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Floor extends Model
 {
+    protected $table = 'transformed_floors';
+
     protected $fillable = [
         'building_id',
         'name',

@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class RoomAttribute extends Model
 {
+    protected $table = 'transformed_room_attributes';
+
     protected $fillable = [
         'room_id',
         'external_id',

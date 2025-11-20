@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class SunbedArea extends Model
 {
+    protected $table = 'transformed_sunbed_areas';
+
     protected $fillable = [
         'hotel_id',
         'name',

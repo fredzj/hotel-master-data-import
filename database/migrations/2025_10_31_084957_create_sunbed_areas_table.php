@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('sunbed_areas', function (Blueprint $table) {
+        Schema::create('transformed_sunbed_areas', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('hotel_id')->constrained('hotels')->onDelete('cascade');
+            $table->foreignId('hotel_id')->constrained('transformed_hotels')->onDelete('cascade');
             $table->string('name');
             $table->text('location_description')->nullable();
             $table->timestamps();
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('sunbed_areas');
+        Schema::dropIfExists('transformed_sunbed_areas');
     }
 };

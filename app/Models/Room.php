@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 
 class Room extends Model
 {
+    protected $table = 'transformed_rooms';
+
     protected $fillable = [
         'room_type_id',
         'floor_id',

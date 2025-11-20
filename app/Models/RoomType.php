@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class RoomType extends Model
 {
+    protected $table = 'transformed_room_types';
+
     protected $fillable = [
         'hotel_id',
         'external_id',
