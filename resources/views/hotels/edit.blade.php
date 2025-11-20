@@ -250,21 +250,13 @@
                             @enderror
                         </div>
 
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                <button type="submit" class="btn btn-primary me-2">Update Hotel</button>
-                                <a href="{{ route('hotels.show', $hotel) }}" class="btn btn-secondary">Cancel</a>
-                            </div>
-                            <div>
-                                <form method="POST" action="{{ route('hotels.destroy', $hotel) }}" style="display: inline;">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger" 
-                                            onclick="return confirm('Are you sure you want to delete this hotel?')">
-                                        Delete Hotel
-                                    </button>
-                                </form>
-                            </div>
+                        <div class="form-group d-flex justify-content-between">
+                            <a href="{{ route('hotels.show', $hotel) }}" class="btn btn-secondary">
+                                <i class="fas fa-times"></i> Cancel
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> Update Hotel
+                            </button>
                         </div>
                     </form>
                 </div>

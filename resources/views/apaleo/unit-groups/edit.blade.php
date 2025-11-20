@@ -111,8 +111,10 @@
 
                         <hr>
 
-                        <div class="text-end">
-                            <a href="{{ route('apaleo-unit-groups.show', $apaleoUnitGroup) }}" class="btn btn-secondary me-2">Cancel</a>
+                        <div class="form-group d-flex justify-content-between">
+                            <a href="{{ route('apaleo-unit-groups.show', $apaleoUnitGroup) }}" class="btn btn-secondary">
+                                <i class="fas fa-times"></i> Cancel
+                            </a>
                             <button type="submit" class="btn btn-primary">
                                 <i class="fas fa-save"></i> Update Unit Group
                             </button>

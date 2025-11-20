@@ -221,29 +221,13 @@
                             @enderror
                         </div>
 
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="form-group mb-0">
-                                    <button type="submit" class="btn btn-primary">
-                                        <i class="fas fa-save"></i> Update Resource
-                                    </button>
-                                    <a href="{{ route('mews-resources.show', $mewsResource) }}" class="btn btn-secondary ml-2">
-                                        Cancel
-                                    </a>
-                                    
-                                    <!-- Delete Button -->
-                                    <div class="float-right">
-                                        <form method="POST" action="{{ route('mews-resources.destroy', $mewsResource) }}" 
-                                              class="d-inline" onsubmit="return confirm('Are you sure you want to delete this resource? This action cannot be undone.');">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger">
-                                                <i class="fas fa-trash"></i> Delete
-                                            </button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="form-group d-flex justify-content-between">
+                            <a href="{{ route('mews-resources.show', $mewsResource) }}" class="btn btn-secondary">
+                                <i class="fas fa-times"></i> Cancel
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> Update Resource
+                            </button>
                         </div>
                     </form>
                 </div>

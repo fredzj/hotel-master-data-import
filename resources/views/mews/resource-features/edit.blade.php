@@ -166,20 +166,13 @@
 
                         <hr class="my-4">
 
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">
-                                    <i class="fas fa-trash"></i> Delete Feature
-                                </button>
-                            </div>
-                            <div class="d-flex gap-2">
-                                <a href="{{ route('mews-resource-features.show', $mewsResourceFeature) }}" class="btn btn-secondary">
-                                    <i class="fas fa-times"></i> Cancel
-                                </a>
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="fas fa-save"></i> Update Feature
-                                </button>
-                            </div>
+                        <div class="form-group d-flex justify-content-between">
+                            <a href="{{ route('mews-resource-features.show', $mewsResourceFeature) }}" class="btn btn-secondary">
+                                <i class="fas fa-times"></i> Cancel
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> Update Feature
+                            </button>
                         </div>
                     </form>
                 </div>
